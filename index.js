@@ -22,7 +22,7 @@ app.get('/cool', function(request, response) {
 //SELECT * FROM test_table
 app.get('/db', function (request, response) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query('select * from uwwsharedcrm.campaign_member_activity__c', function(err, result) {
+    client.query('select * from campaign_member_activity__c', function(err, result) {
       done();
       if (err)
        { console.error(err); response.send("Error " + err); }
