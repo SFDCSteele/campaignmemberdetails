@@ -73,10 +73,10 @@ app.post('/campaignmemberdetails', function (request, response) {
 	var validationErrors  = "";
 	
 	validationErrors=performValidations(newCampaignDetail);
-	//console.log("Validation errors: "+validationErrors);
+	console.log("1-Validation errors: "+validationErrors+" len: "+validationErrors.length);
 	if  (validationErrors == null || validationErrors.length<=1) {
-		console.log("Validation errors: "+validationErrors);
-		response.send("Validation errors: "+validationErrors);
+		console.log("2-Validation errors: "+validationErrors+" len: "+validationErrors.length);
+		response.send("3-Validation errors: "+validationErrors+" len: "+validationErrors.length);
 	}
 	
 	/*bCampaignExists = campaignExists (newCampaignDetail);
@@ -105,7 +105,8 @@ app.post('/campaignmemberdetails', function (request, response) {
 		});
 		console.log("Which record to save: bCampaignExists: "+bCampaignExists+
 						" and Activity_Type__c: "+newCampaignDetail.Activity_Type__c);
-		if ( bCampaignExists && newCampaignDetail.Activity_Type__c == "Video" ) {
+		//if ( bCampaignExists && newCampaignDetail.Activity_Type__c == "Video" ) {
+		if ( newCampaignDetail.Activity_Type__c == "Video" ) {
 			postVideoResults(newCampaignDetail);
 			response.send(200);
 		}
