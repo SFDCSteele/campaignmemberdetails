@@ -135,10 +135,10 @@ function performValidations(body) {
 	if (!(body.FirstName || body.LastName)) {
 		rtnErrors+= "Invalid user input\tMust provide a first and last name.";
 	}
-	if (!(body.email) {
+	if (!(body.email)) {
 		rtnErrors+= "Invalid user input\tMust provide an email address.";
 	}
-	if (!(body.PostalCode) {
+	if (!(body.PostalCode)) {
 		rtnErrors+= "Invalid user input\tMust provide a postal code.";
 	}
 	return rtnErrors;
