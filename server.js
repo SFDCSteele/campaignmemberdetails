@@ -91,7 +91,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 		postVideoResults(newCampaignDetail);
 	}
 	
-	reponse.send(200);
+	response.send(200);
 	/*var sqlInsert = "insert into campaign_details (";
 	var sqlFields = "";
 	var sqlValues = ") values (";
@@ -187,8 +187,8 @@ function campaignExists (body) {
       if (err) { 
       	console.error(err); 
       } else { 
-       	console.log ("1-rows: "+JSON.stringify(result.rows)+" setting true");
 		rtnResults = "true";
+       	console.log ("1-rows: "+JSON.stringify(result.rows)+" setting true");
 	  }
     });
   });
