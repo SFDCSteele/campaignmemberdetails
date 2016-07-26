@@ -107,8 +107,15 @@ app.post('/campaignmemberdetails', function (request, response) {
 		console.log("Which record to save: bCampaignExists: "+bCampaignExists+
 						" and Activity_Type__c: "+newCampaignDetail.Activity_Type__c);
 		//if ( bCampaignExists && newCampaignDetail.Activity_Type__c == "Video" ) {
-		if ( newCampaignDetail.Activity_Type__c == "Video" ) {
-			postVideoResults(newCampaignDetail);
+		if ( newCampaignDetail.Activity_Type__c == "Video" ) {			
+			client.query(postVideoResults(newCampaignDetail);, function(err, result) {
+				done();
+				if (err) { 
+					console.error(err); 
+				} else { 
+					console.log("Campaign member activity posted: "+newCampaignDetail.Activity_Type__c);
+				}
+			});
 			response.send(200);
 		}
 	});
@@ -201,7 +208,8 @@ function postVideoResults(newCampaignDetail) {
 	        console.log(prop +"-->"+newCampaignDetail[prop]);
 	    }
 	}
-	console.log("sql to execute: "+sqlInsert+sqlFields+sqlValues+")");    
+	console.log("sql to execute: "+sqlInsert+sqlFields+sqlValues+")");
+	return sqlInsert+sqlFields+sqlValues+")";    
     //pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     /*pg.client.query(sqlInsert+sqlFields+sqlValues+")", function(err, result) {
       done();
