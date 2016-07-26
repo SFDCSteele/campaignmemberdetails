@@ -142,7 +142,7 @@ function buildQuery (opt) {
 			"from uwwsharedcrm.campaign_member_activity__c a, uwwsharedcrm.campaign c "+
 			"where a.Campaign__c=c.sfid";
 	} else if ( opt == 2 ) { //lookup campaign
-		rtnSQL = "select sfid from uwwsharedcrm.campaign where sfid=\"";
+		rtnSQL = "select sfid from uwwsharedcrm.campaign where sfid='";
 	}
 	console.log("returning SQL: "+rtnSQL);
 	return rtnSQL;
@@ -164,7 +164,7 @@ function performValidations(body) {
 }
 
 function campaignExists (body) {
-  var sSQL = buildQuery(2)+body.Campaign__c+"\"";
+  var sSQL = buildQuery(2)+body.Campaign__c+"'";
   console.log("campaignExists: executing query: "+sSQL);
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     client.query(sSQL, function(err, result) {
