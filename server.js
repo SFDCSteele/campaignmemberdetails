@@ -189,7 +189,7 @@ function buildQuery (opt) {
 
 function postVideoResults(newCampaignDetail) {
 	console.log("inside postVideoResults with activity: "+newCampaignDetail.Activity_Type__c);
-	var sqlInsert = "insert into uwwsharedcrm.campaign_details (";
+	var sqlInsert = "insert into uwwsharedcrm.campaign_member_activity__c (";
 	var sqlFields = "";
 	var sqlValues = ") values (";
 	var i = 0;
