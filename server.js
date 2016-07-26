@@ -35,6 +35,7 @@ app.get('/campaignmemberdetails', function (request, response) {
       else
        { 
        	console.log ("rows: "+result.rows);
+       	displayObject(result.rows);
        	response.render('pages/campaignmemberdetails', {results: result.rows} 
        ); }
     });
@@ -73,6 +74,20 @@ function executeQuery (opt) {
 	console.log("returning SQL: "+rtnSQL);
 	return rtnSQL;
 	
+}
+
+function displayObject(rows) {
+	for (var prop in rows) {
+	    if (rows.hasOwnProperty(prop)) {
+	    	/*if ( i++ > 0 ) {
+	    		sqlFields += ",";
+	    		sqlValues += ",";
+	    	}
+	    	sqlFields += prop;
+	    	sqlValues += "'" + newCampaignDetail[prop] + "'";*/
+	        console.log(prop +"-->"+rows[prop]);
+	    }
+	}    
 }
 
 
