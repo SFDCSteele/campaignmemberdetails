@@ -66,7 +66,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 			console.log("object: "+JSON.stringify(request.body[prop]));
 	    }
 	}    
-	console.log("REQUEST BODY: "+JSON.stringify(request.body));
+	console.log("REQUEST BODY: "+JSON.stringify(request.body));*/
 	var newCampaignDetail = request.body;
 	console.log("newCampaignDetail: "+JSON.stringify(newCampaignDetail));
 	var validationErrors  = "";
@@ -80,7 +80,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 		console.log("Non-existent campaign ID");
 		response.send("Non-existent campaign ID");
 	}
-	*/
+	response.send(200);
 	
 	/*var sqlInsert = "insert into campaign_details (";
 	var sqlFields = "";
