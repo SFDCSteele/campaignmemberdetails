@@ -74,7 +74,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 	
 	validationErrors=performValidations(newCampaignDetail);
 	console.log("Validation errors: "+validationErrors);
-	if  (validationErrors != null) {
+	if  (validationErrors == null || validationErrors.length<=0) {
 		console.log("Validation errors: "+validationErrors);
 		response.send("Validation errors: "+validationErrors);
 	}
@@ -90,9 +90,9 @@ app.post('/campaignmemberdetails', function (request, response) {
 	
 	if ( newCampaignDetail.Activity_Type__c = "Video" ) {
 		postVideoResults(newCampaignDetail);
+		response.send(200);
 	}
 	
-	response.send(200);
 	/*var sqlInsert = "insert into campaign_details (";
 	var sqlFields = "";
 	var sqlValues = ") values (";
@@ -165,7 +165,7 @@ function postVideoResults(body) {
 }
 
 function performValidations(body) {
-	var rtnErrors ="";
+	var rtnErrors;
 	console.log("performValidations: body: "+JSON.stringify(body));
 	console.log("performValidations: body.FirstName: "+body.FirstName.length);
 	if (!(body.FirstName || body.FirstName.length>0)) {
@@ -174,10 +174,10 @@ function performValidations(body) {
 	if (!(body.LastName || body.LastName.length>0)) {
 		rtnErrors+= "Invalid user input\tMust provide a last name.";
 	}
-	if (!(body.email)) {
+	if (!(body.email || body.email.length>0)) {
 		rtnErrors+= "Invalid user input\tMust provide an email address.";
 	}
-	if (!(body.PostalCode)) {
+	if (!(body.PostalCode || body.PostalCode.length>0)) {
 		rtnErrors+= "Invalid user input\tMust provide a postal code.";
 	}
 	return rtnErrors;
