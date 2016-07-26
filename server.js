@@ -107,7 +107,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 		console.log("Which record to save: bCampaignExists: "+bCampaignExists+
 						" and Activity_Type__c: "+newCampaignDetail.Activity_Type__c);
 		//if ( bCampaignExists && newCampaignDetail.Activity_Type__c == "Video" ) {
-		if ( newCampaignDetail.Activity_Type__c == "Video" ) {			
+		if ( newCampaignDetail.RecordTypeId == "0122C0000004HnQQAU" ) {			
 			client.query(postVideoResults(newCampaignDetail), function(err, result) {
 				done();
 				if (err) { 
