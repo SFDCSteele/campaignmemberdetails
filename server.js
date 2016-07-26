@@ -164,14 +164,16 @@ function performValidations(body) {
 }
 
 function campaignExists (body) {
+  var sSQL = buildQuery(2)+body.Campaign__c+"\"";
+  console.log("campaignExists: executing query: "+sSQL);
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query(buildQuery(2)+body.Campaign__c+"\"", function(err, result) {
+    client.query(sSQL, function(err, result) {
       done();
       if (err) { 
       	console.error(err); 
       	return false; 
       } else { 
-       	console.log ("1-rows: "+result.rows);
+       	console.log ("1-rows: "+JSON.stringify(newCampaignDetailresult.rows));
        	return true;
 	  }
     });
