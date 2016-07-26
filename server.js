@@ -67,7 +67,8 @@ function executeQuery (opt) {
 			"from uwwsharedcrm.campaign_member_activity__c a,uwwsharedcrm.campaign c"+
 			"where a.Campaign__c=c.sfid";
 	}
-	return SQL;
+	console.log("returning SQL: "+rtnSQL);
+	return rtnSQL;
 	
 }
 
