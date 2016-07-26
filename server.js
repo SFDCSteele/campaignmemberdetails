@@ -54,7 +54,7 @@ app.get('/campaignmemberdetails', function (request, response) {
 
 app.post('/campaignmemberdetails', function (request, response) {
 	for (var prop in request.body) {
-	    if (request.hasOwnProperty(prop)) {
+	    if (request.body.hasOwnProperty(prop)) {
 	        console.log(prop +"-->"+request.body[prop]);
 	    }
 	}    
