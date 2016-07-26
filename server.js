@@ -59,6 +59,7 @@ app.get('/campaignmemberdetails', function (request, response) {
 app.post('/campaignmemberdetails', function (request, response) {
 	console.log("REQUEST     : "+request);
 	console.log("REQUEST BODY: "+request.body);
+    console.log(JSON.stringify(request.body));
 	/*for (var prop in request.body) {
 	    if (request.body.hasOwnProperty(prop)) {
 	        console.log("1--"+prop +"-->"+request.body[prop]);
