@@ -2,15 +2,15 @@ var pg = require('pg');
 var cool = require('cool-ascii-faces');
 var express = require('express');
 var path = require("path");
-var bodyParser = require("body-parser");
-var mongodb = require("mongodb");
-var ObjectID = mongodb.ObjectID;
+//var bodyParser = require("body-parser");
+//var mongodb = require("mongodb");
+//var ObjectID = mongodb.ObjectID;
 
 var CONTACTS_COLLECTION = "contacts";
 
 var app = express();
 app.use(express.static(__dirname + "/public"));
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 
 // Connect to the database before starting the application server. 
 // views is directory for all template files
@@ -18,7 +18,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
-var db;
+/*var db;
 
 // Connect to the database before starting the application server.
 mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
@@ -37,7 +37,7 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
     console.log("App now running on port", port);
   });
 });
-
+*/
 // CONTACTS API ROUTES BELOW
 
 // Generic error handler used by all endpoints.
@@ -117,7 +117,7 @@ app.post('/campaigndetails', function (request, response) {
  *    GET: finds all contacts
  *    POST: creates a new contact
  */
-
+/*
 app.get("/contacts", function(req, res) {
   db.collection(CONTACTS_COLLECTION).find({}).toArray(function(err, docs) {
     if (err) {
@@ -144,13 +144,13 @@ app.post("/contacts", function(req, res) {
     }
   });
 });
-
+*/
 /*  "/contacts/:id"
  *    GET: find contact by id
  *    PUT: update contact by id
  *    DELETE: deletes contact by id
  */
-
+/*
 app.get("/contacts/:id", function(req, res) {
   db.collection(CONTACTS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
@@ -183,6 +183,7 @@ app.delete("/contacts/:id", function(req, res) {
     }
   });
 });
+*/
 //curl -H "Content-Type: application/json" -d '{"firstName":"Chris", "lastName": "Chang", "email": "support@mlab.com"}' https://campaignmemberdetails.herokuapp.com/contacts
 //curl -H "Content-Type: application/json" -d '{"campaignid":"2001","contactid":"3001","leadid":"4001","leadsource":"testing","utmsource":"web","luwid":"5001","subscriberkey":"1234-6001","recordtype":"quiz","recordname":"mym phase 1","recordresults":"whatbringsjoy=kittens"}' https://campaignmemberdetails.herokuapp.com/campaigndetails
 //curl -H "Content-Type: application/json" -d '{"id":10001,"campaignid":"2001","contactid":"3001","leadid":"4001","leadsource":"testing","utmsource":"web","luwid":"5001","subscriberkey":"1234-6001","recordtype":"quiz","recordname":"mym phase 1","recordresults":"whatbringsjoy=kittens"}' https://campaignmemberdetails.herokuapp.com/campaigndetails
