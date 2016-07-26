@@ -173,7 +173,7 @@ function campaignExists (body) {
       	console.error(err); 
       	return false; 
       } else { 
-       	console.log ("1-rows: "+JSON.stringify(newCampaignDetailresult.rows));
+       	console.log ("1-rows: "+JSON.stringify(result.rows));
        	return true;
 	  }
     });
