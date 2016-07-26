@@ -80,6 +80,8 @@ app.post('/campaignmemberdetails', function (request, response) {
 	if (!(bCampaignExists=campaignExists(newCampaignDetail))) {
 		console.log("Non-existent campaign ID");
 		response.send("Non-existent campaign ID");
+	} else (
+		console.log("this is the true side--campaign exists!: "+bCampaignExists);
 	}
 	if ( bCampaignExists ) {
 		response.send(200);
