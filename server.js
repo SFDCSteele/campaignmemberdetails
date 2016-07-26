@@ -59,7 +59,7 @@ app.get('/campaignmemberdetails', function (request, response) {
 app.post('/campaignmemberdetails', function (request, response) {
 	console.log("REQUEST     : "+request);
 	console.log("REQUEST BODY: "+request.body);
-	for (var prop in request.body) {
+	/*for (var prop in request.body) {
 	    if (request.body.hasOwnProperty(prop)) {
 	        console.log("1--"+prop +"-->"+request.body[prop]);
 			console.log("object: "+JSON.stringify(request.body[prop]));
@@ -79,7 +79,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 		console.log("Non-existent campaign ID");
 		response.send("Non-existent campaign ID");
 	}
-	
+	*/
 	
 	/*var sqlInsert = "insert into campaign_details (";
 	var sqlFields = "";
