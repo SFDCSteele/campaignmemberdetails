@@ -88,7 +88,7 @@ function displayObject(rows) {
 	        console.log(prop +"-->"+rows[prop]);
 	        for (var inProp in prop) {
 	        	if (prop.hasOwnProperty(inProp)) {
-	        		console.log("/t"+inProp+"-->"+prop[inProp]);
+	        		console.log("\t"+inProp+"-->"+prop[inProp]);
 	        	}
 	        }
 	    }
