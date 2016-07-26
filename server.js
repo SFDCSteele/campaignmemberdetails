@@ -33,7 +33,10 @@ app.get('/campaignmemberdetails', function (request, response) {
       if (err)
        { console.error(err); response.send("Error " + err); }
       else
-       { response.render('pages/campaignmemberdetails', {results: result.rows} ); }
+       { 
+       	console.log ("rows: "+result.rows);
+       	response.render('pages/campaignmemberdetails', {results: result.rows} 
+       ); }
     });
   });
 })
