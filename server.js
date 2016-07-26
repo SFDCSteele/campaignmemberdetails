@@ -189,9 +189,9 @@ function postVideoResults(newCampaignDetail) {
 	
 	for (var prop in newCampaignDetail) {
 	    if (newCampaignDetail.hasOwnProperty(prop) &&
-	    	exclude_att.indexOf(newCampaignDetail.hasOwnProperty(prop)) < 0) {
-	    	console.log("is "+newCampaignDetail.hasOwnProperty(prop)+" in "+
-	    			exclude_att+" ("+exclude_att.indexOf(newCampaignDetail.hasOwnProperty(prop))+")");
+	    	exclude_att.indexOf(prop) < 0) {
+	    	console.log("is "+prop+" in "+
+	    			exclude_att+" ("+exclude_att.indexOf(prop)+")");
 	    	if ( i++ > 0 ) {
 	    		sqlFields += ",";
 	    		sqlValues += ",";
