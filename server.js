@@ -17,7 +17,7 @@ app.get('/', function(request, response) {
 
 //SELECT * FROM test_table
 //select * from campaign_member_activity__c
-app.get('/campaigndetails', function (request, response) {
+app.get('/campaignmemberdetails', function (request, response) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     client.query('select * from uwwsharedcrm.campaign_member_activity__c', function(err, result) {
       done();
