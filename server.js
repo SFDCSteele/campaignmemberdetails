@@ -63,8 +63,8 @@ function executeQuery (opt) {
 			"a.Video_Name__c as \"Video Name\","+
 			"a.Video_Type__c as \"Video Type\","+
 			"a.Video_Status__c as \"Video Status\","+
-			"a.Future_1__c as \"Future Result\""+
-			"from uwwsharedcrm.campaign_member_activity__c a,uwwsharedcrm.campaign c"+
+			"a.Future_1__c as \"Future Result\" "+
+			"from uwwsharedcrm.campaign_member_activity__c a, uwwsharedcrm.campaign c "+
 			"where a.Campaign__c=c.sfid";
 	}
 	console.log("returning SQL: "+rtnSQL);
