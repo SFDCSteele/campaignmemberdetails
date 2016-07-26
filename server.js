@@ -36,7 +36,7 @@ app.get('/', function(request, response) {
 app.get('/campaignmemberdetails', function (request, response) {
   //pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     //client.query('select * from uwwsharedcrm.campaign_member_activity__c', function(err, result) {
-    pg.client.query(buildQuery(1), function(err, result) {
+    client.query(buildQuery(1), function(err, result) {
       done();
       if (err)
        { console.error(err); response.send("Error " + err); }
