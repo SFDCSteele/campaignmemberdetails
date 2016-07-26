@@ -168,8 +168,11 @@ function performValidations(body) {
 	var rtnErrors ="";
 	console.log("performValidations: body: "+JSON.stringify(body));
 	console.log("performValidations: body.FirstName: "+body.FirstName);
-	if (!(body.FirstName || body.LastName)) {
-		rtnErrors+= "Invalid user input\tMust provide a first and last name.";
+	if (!(body.FirstName || body.FirstName.length<=0)) {
+		rtnErrors+= "Invalid user input\tMust provide a first name.";
+	}
+	if (!(body.LastName || body.LastName.length<=0)) {
+		rtnErrors+= "Invalid user input\tMust provide a last name.";
 	}
 	if (!(body.email)) {
 		rtnErrors+= "Invalid user input\tMust provide an email address.";
