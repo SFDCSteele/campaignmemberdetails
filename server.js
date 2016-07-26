@@ -79,19 +79,35 @@ app.post('/campaignmemberdetails', function (request, response) {
 		response.send("Validation errors: "+validationErrors);
 	}
 	
-	bCampaignExists = campaignExists (newCampaignDetail);
+	/*bCampaignExists = campaignExists (newCampaignDetail);
 	console.log("returning results of campaignExists: " + bCampaignExists);
 	if (bCampaignExists=="true") {
 		console.log("Campaign exists!: "+bCampaignExists);
 	} else {
 		console.log("xNon-existent campaign ID: "+bCampaignExists);
 		response.send("yNon-existent campaign ID");
-	}
+	}*/
 	
-	if ( newCampaignDetail.Activity_Type__c = "Video" ) {
-		postVideoResults(newCampaignDetail);
-		response.send(200);
-	}
+	var sSQL = buildQuery(2)+newCampaignDetail.Campaign__c+"'";
+	var bCampaignExists = false;
+	console.log("campaignExists: executing query: "+sSQL);
+	pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+		client.query(sSQL, function(err, result) {
+			done();
+			if (err) { 
+				console.error(err); 
+				console.log("Non-existent campaign ID: "+bCampaignExists);
+			} else { 
+				bCampaignExists = true;
+				console.log("Campaign exists!: "+bCampaignExists);
+				console.log ("1-rows: "+JSON.stringify(result.rows)+" setting true");
+			}
+		});
+		if ( bCampaignExists && newCampaignDetail.Activity_Type__c = "Video" ) {
+			postVideoResults(newCampaignDetail);
+			response.send(200);
+		}
+	});
 	
 	/*var sqlInsert = "insert into campaign_details (";
 	var sqlFields = "";
