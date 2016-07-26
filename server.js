@@ -79,7 +79,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 	}
 	
 	bCampaignExists = campaignExists (newCampaignDetail);
-	console.log("returning results of campaignExists: "_+ bCampaignExists);
+	console.log("returning results of campaignExists: " + bCampaignExists);
 	if (bCampaignExists=="true") {
 		console.log("Campaign exists!: "+bCampaignExists);
 	} else {
