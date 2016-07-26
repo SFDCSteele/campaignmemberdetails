@@ -57,7 +57,7 @@ app.get('/campaignmemberdetails', function (request, response) {
 });
 
 app.post('/campaignmemberdetails', function (request, response) {
-	var bCampaignExists = "false";
+	var bContinueProcessing = true;
 	console.log("REQUEST     : "+request);
 	console.log("REQUEST BODY: "+request.body);
     console.log(JSON.stringify(request.body));
@@ -103,7 +103,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 				console.log ("1-rows: "+JSON.stringify(result.rows)+" setting true");
 			}
 		});
-		if ( bCampaignExists && newCampaignDetail.Activity_Type__c = "Video" ) {
+		if ( bCampaignExists && newCampaignDetail.Activity_Type__c == "Video" ) {
 			postVideoResults(newCampaignDetail);
 			response.send(200);
 		}
@@ -181,7 +181,7 @@ function postVideoResults(body) {
 }
 
 function performValidations(body) {
-	var rtnErrors;
+	var rtnErrors="";
 	console.log("performValidations: body: "+JSON.stringify(body));
 	console.log("performValidations: body.FirstName: "+body.FirstName.length);
 	if (!(body.FirstName || body.FirstName.length>0)) {
