@@ -167,7 +167,7 @@ function postVideoResults(body) {
 function performValidations(body) {
 	var rtnErrors ="";
 	console.log("performValidations: body: "+JSON.stringify(body));
-	console.log("performValidations: body.FirstName: "+body.FirstName);
+	console.log("performValidations: body.FirstName: "+body.FirstName.length);
 	if (!(body.FirstName || body.FirstName.length<=0)) {
 		rtnErrors+= "Invalid user input\tMust provide a first name.";
 	}
