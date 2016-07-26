@@ -179,8 +179,38 @@ function buildQuery (opt) {
 	
 }
 
-function postVideoResults(body) {
-	console.log("inside postVideoResults with activity: "+body.Name);
+function postVideoResults(newCampaignDetail) {
+	console.log("inside postVideoResults with activity: "+newCampaignDetail.Activity_Type__c);
+	var sqlInsert = "insert into uwwsharedcrm.campaign_details (";
+	var sqlFields = "";
+	var sqlValues = ") values (";
+	var i = 0;
+	
+	for (var prop in newCampaignDetail) {
+	    if (newCampaignDetail.hasOwnProperty(prop)) {
+	    	if ( i++ > 0 ) {
+	    		sqlFields += ",";
+	    		sqlValues += ",";
+	    	}
+	    	sqlFields += prop;
+	    	sqlValues += "'" + newCampaignDetail[prop] + "'";
+	        console.log(prop +"-->"+newCampaignDetail[prop]);
+	    }
+	}
+	console.log("sql to execute: "+sqlInsert+sqlFields+sqlValues+")");    
+    //pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    /*pg.client.query(sqlInsert+sqlFields+sqlValues+")", function(err, result) {
+      done();
+      if (err)
+       { console.error(err); response.send("Error " + err+"<table><tr><td>datebase   url</td><td>"+process.env.DATABASE_URL+"</td></tr>"+
+                                                          "<tr><td>sql statement:</td><td>"+sqlInsert+sqlFields+sqlValues+")"+"</td></tr></table>"); }
+      else
+       { 
+	    response.send(200);
+     	//response.render('pages/db', {results: result.rows} );
+       }
+    //});
+  });*/
 }
 
 function performValidations(body) {
