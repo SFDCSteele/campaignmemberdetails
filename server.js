@@ -73,8 +73,8 @@ app.post('/campaignmemberdetails', function (request, response) {
 	var validationErrors  = "";
 	
 	validationErrors=performValidations(newCampaignDetail);
-	console.log("1-Validation errors: "+validationErrors+" len: "+validationErrors.length);
-	if  (validationErrors == null || validationErrors.length<=1) {
+	//console.log("1-Validation errors: "+validationErrors+" len: "+validationErrors.length);
+	if  (validationErrors.length>0) {
 		console.log("2-Validation errors: "+validationErrors+" len: "+validationErrors.length);
 		response.send("3-Validation errors: "+validationErrors+" len: "+validationErrors.length);
 	}
