@@ -3,6 +3,7 @@ var app = express();
 var pg = require('pg');
 var path = require("path");
 pg.defaults.ssl = true;
+var bodyParser = require("body-parser");
 //var xClient = new pg.Client();
 
 var main_sql = "";
@@ -56,10 +57,10 @@ app.get('/campaignmemberdetails', function (request, response) {
 app.post('/campaignmemberdetails', function (request, response) {
 	console.log("REQUEST     : "+request);
 	console.log("REQUEST BODY: "+request.body);
-	for (var prop in request) {
-	    if (request.hasOwnProperty(prop)) {
-	        console.log("1--"+prop +"-->"+request[prop]);
-			console.log("object: "+JSON.stringify(request[prop]));
+	for (var prop in request.body) {
+	    if (request.body.hasOwnProperty(prop)) {
+	        console.log("1--"+prop +"-->"+request.body[prop]);
+			console.log("object: "+JSON.stringify(request.body[prop]));
 	    }
 	}    
 	console.log("REQUEST BODY: "+JSON.stringify(request.body));
