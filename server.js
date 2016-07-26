@@ -53,12 +53,12 @@ app.get('/campaignmemberdetails', function (request, response) {
 });
 
 app.post('/campaignmemberdetails', function (request, response) {
-	for (var prop in request) {
+	for (var prop in request.body) {
 	    if (request.hasOwnProperty(prop)) {
-	        console.log(prop +"-->"+request[prop]);
+	        console.log(prop +"-->"+request.body[prop]);
 	    }
 	}    
-	console.log("REQUEST BODY: "+JSON.stringify(request));
+	console.log("REQUEST BODY: "+JSON.stringify(request.body));
 	var newCampaignDetail = request.body;
 	console.log("newCampaignDetail: "+JSON.stringify(newCampaignDetail));
 	var validationErrors  = "";
