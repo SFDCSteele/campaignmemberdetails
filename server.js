@@ -53,19 +53,23 @@ app.get('/campaignmemberdetails', function (request, response) {
 });
 
 app.post('/campaignmemberdetails', function (request, response) {
+	console.log("REQUEST BODY: "+JSON.stringify(request.body));
 	var newCampaignDetail = request.body;
+	console.log("newCampaignDetail: "+JSON.stringify(newCampaignDetail));
 	var validationErrors  = "";
 	
 	if  ((validationErrors=performValidations(newCampaignDetail)) != null) {
+		console.log("Validation errors: "+validationErrors);
 		response.send("Validation errors: "+validationErrors);
 	}
 	
 	if (!campaignExists(newCampaignDetail)) {
+		console.log("Non-existent campaign ID");
 		response.send("Non-existent campaign ID");
 	}
 	
 	
-	var sqlInsert = "insert into campaign_details (";
+	/*var sqlInsert = "insert into campaign_details (";
 	var sqlFields = "";
 	var sqlValues = ") values (";
 	var i = 0;
@@ -93,7 +97,7 @@ app.post('/campaignmemberdetails', function (request, response) {
      	//response.render('pages/db', {results: result.rows} );
        }
     //});
-  });
+  });*/
 })
 
 app.listen(app.get('port'), function() {
@@ -147,15 +151,18 @@ function performValidations(body) {
 }
 
 function campaignExists (body) {
-    pg.client.query(buildQuery(2)+body.Campaign__c+"\"", function(err, result) {
-      //done();
-		if (err) {
-      		console.error(err); 
-      		return false;
-      	} else { 
-			return true;
-		}
-    });	
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    client.query(buildQuery(2)+body.Campaign__c+"\"", function(err, result) {
+      done();
+      if (err) { 
+      	console.error(err); 
+      	return false; 
+      } else { 
+       	console.log ("1-rows: "+result.rows);
+       	return true;
+	  }
+    });
+  });
 }
 
 function displayObject(rows) {
