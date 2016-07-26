@@ -57,6 +57,7 @@ app.get('/campaignmemberdetails', function (request, response) {
 });
 
 app.post('/campaignmemberdetails', function (request, response) {
+	var bCampaignExists = false;
 	console.log("REQUEST     : "+request);
 	console.log("REQUEST BODY: "+request.body);
     console.log(JSON.stringify(request.body));
@@ -76,12 +77,13 @@ app.post('/campaignmemberdetails', function (request, response) {
 		response.send("Validation errors: "+validationErrors);
 	}
 	
-	if (!campaignExists(newCampaignDetail)) {
+	if (!(bCampaignExists=campaignExists(newCampaignDetail))) {
 		console.log("Non-existent campaign ID");
 		response.send("Non-existent campaign ID");
 	}
-	response.send(200);
-	
+	if ( bCampaignExists ) {
+		response.send(200);
+	}
 	/*var sqlInsert = "insert into campaign_details (";
 	var sqlFields = "";
 	var sqlValues = ") values (";
@@ -173,7 +175,7 @@ function campaignExists (body) {
       	console.error(err); 
       	return false; 
       } else { 
-       	console.log ("1-rows: "+JSON.stringify(result.rows));
+       	console.log ("1-rows: "+JSON.stringify(result.rows)+" setting true");
        	return true;
 	  }
     });
