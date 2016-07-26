@@ -11,11 +11,12 @@
 <div class="container">
 <h2>Campaign Member Details Results</h2>
 
-<ul>
+<table>
+	<tr><th>ID</th><th>Name</th></tr>
     <% results.forEach(function(r) { %>
-        <li><%= r.id %> - <%= r.name %></li>
+        <tr><td><%= r.ID %></td><td><%= r.Name %></td></tr>
     <% }); %>
-</ul>
+</table>
 
 </div>
 
