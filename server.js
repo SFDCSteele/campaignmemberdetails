@@ -85,7 +85,7 @@ function displayObject(rows) {
 	    	}
 	    	sqlFields += prop;
 	    	sqlValues += "'" + newCampaignDetail[prop] + "'";*/
-	        console.log(prop +"-->"+displayObject(rows[prop]));
+	        console.log(prop +"-->"+rows[prop]);
 	    }
 	}    
 }
