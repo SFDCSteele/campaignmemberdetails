@@ -6,7 +6,7 @@ var bodyParser = require("body-parser");
 //var xClient = new pg.Client();
 
 var main_sql = "";
-var exclude_att = {"FirstName","LastName","email","PostalCode","SubscriberKey","LUWID"};
+var exclude_att[] = {"FirstName","LastName","email","PostalCode","SubscriberKey","LUWID"};
 /*xClient.connect(process.env.DATABASE_URL, function(err, xClient) {
   if (err) throw err;
   console.log('Connected to postgres! Getting schemas...');
@@ -189,7 +189,7 @@ function postVideoResults(newCampaignDetail) {
 	
 	for (var prop in newCampaignDetail) {
 	    if (newCampaignDetail.hasOwnProperty(prop) &&
-	    	!(exclude_att.hassOwnProperty(newCampaignDetail.hasOwnProperty(prop)))) {
+	    	!(newCampaignDetail.hasOwnProperty(prop) in exclude_att)) {
 	    	if ( i++ > 0 ) {
 	    		sqlFields += ",";
 	    		sqlValues += ",";
