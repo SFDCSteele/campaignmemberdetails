@@ -6,7 +6,7 @@ var bodyParser = require("body-parser");
 //var xClient = new pg.Client();
 
 var main_sql = "";
-var exclude_att[] = {"FirstName","LastName","email","PostalCode","SubscriberKey","LUWID"};
+var exclude_att = ["FirstName","LastName","email","PostalCode","SubscriberKey","LUWID"];
 /*xClient.connect(process.env.DATABASE_URL, function(err, xClient) {
   if (err) throw err;
   console.log('Connected to postgres! Getting schemas...');
