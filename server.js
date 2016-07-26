@@ -72,12 +72,14 @@ app.post('/campaignmemberdetails', function (request, response) {
 	console.log("newCampaignDetail: "+JSON.stringify(newCampaignDetail));
 	var validationErrors  = "";
 	
-	if  ((validationErrors=performValidations(newCampaignDetail)) != null) {
+	validationErrors=performValidations(newCampaignDetail);
+	if  (validationErrors != null) {
 		console.log("Validation errors: "+validationErrors);
 		response.send("Validation errors: "+validationErrors);
 	}
 	
-	if (!(bCampaignExists=campaignExists(newCampaignDetail))) {
+	bCampaignExists=campaignExists(newCampaignDetail);
+	if (!bCampaignExists) {
 		console.log("Non-existent campaign ID");
 		response.send("Non-existent campaign ID");
 	} else {
