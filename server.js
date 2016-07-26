@@ -133,13 +133,13 @@ function buildQuery (opt) {
 function performValidations(body) {
 	var rtnErrors;
 	if (!(body.FirstName || body.LastName)) {
-		rtnErrors+= "Invalid user input", "Must provide a first and last name.";
+		rtnErrors+= "Invalid user input\tMust provide a first and last name.";
 	}
 	if (!(body.email) {
-		rtnErrors+= "Invalid user input", "Must provide an email address.";
+		rtnErrors+= "Invalid user input\tMust provide an email address.";
 	}
 	if (!(body.PostalCode) {
-		rtnErrors+= "Invalid user input", "Must provide a postal code.";
+		rtnErrors+= "Invalid user input\tMust provide a postal code.";
 	}
 	return rtnErrors;
 }
