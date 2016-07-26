@@ -16,6 +16,8 @@ app.use(express.static(__dirname + "/public"));
 // views is directory for all template files
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
+pg.defaults.ssl = true;
+
 
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 /*var db;
