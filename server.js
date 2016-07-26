@@ -77,18 +77,20 @@ function executeQuery (opt) {
 }
 
 function displayObject(rows) {
-	for (var prop in rows) {
-	    if (rows.hasOwnProperty(prop)) {
+	console.log("How many rows: "+Object.keys(rows).length);
+	for (var row in rows) {
+	    if (rows.hasOwnProperty(row)) {
 	    	/*if ( i++ > 0 ) {
 	    		sqlFields += ",";
 	    		sqlValues += ",";
 	    	}
 	    	sqlFields += prop;
 	    	sqlValues += "'" + newCampaignDetail[prop] + "'";*/
-	        console.log(prop +"-->"+rows[prop]);
-	        for (var inProp in prop) {
-	        	if (prop.hasOwnProperty(inProp)) {
-	        		console.log("\t"+inProp+"-->"+prop[inProp]);
+			console.log("How many columns: "+Object.keys(row).length);
+	        console.log(row +"-->"+rows[row]);
+	        for (var col in row) {
+	        	if (row.hasOwnProperty(col)) {
+	        		console.log("\t"+col+"-->"+row[col]);
 	        	}
 	        }
 	    }
