@@ -2,10 +2,10 @@ var express = require('express');
 var app = express();
 var pg = require('pg');
 pg.defaults.ssl = true;
-var client = new pg.Client();
+var xClient = new pg.Client();
 
 var main_sql = "";
-client.connect(process.env.DATABASE_URL, function(err, client) {
+xClient.connect(process.env.DATABASE_URL, function(err, client) {
   if (err) throw err;
   console.log('Connected to postgres! Getting schemas...');
 
@@ -37,7 +37,7 @@ app.get('/', function(request, response) {
 app.get('/campaignmemberdetails', function (request, response) {
   //pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     //client.query('select * from uwwsharedcrm.campaign_member_activity__c', function(err, result) {
-    client.query(buildQuery(1), function(err, result) {
+    xClient.query(buildQuery(1), function(err, result) {
       done();
       if (err)
        { console.error(err); response.send("Error " + err); }
