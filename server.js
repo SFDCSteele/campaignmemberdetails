@@ -73,6 +73,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 	var validationErrors  = "";
 	
 	validationErrors=performValidations(newCampaignDetail);
+	console.log("Validation errors: "+validationErrors);
 	if  (validationErrors != null) {
 		console.log("Validation errors: "+validationErrors);
 		response.send("Validation errors: "+validationErrors);
