@@ -53,7 +53,7 @@ app.get('/campaignmemberdetails', function (request, response) {
 });
 
 app.post('/campaignmemberdetails', function (request, response) {
-	console.log("REQUEST BODY: "+JSON.stringify(request.body));
+	console.log("REQUEST BODY: "+JSON.stringify(request));
 	var newCampaignDetail = request.body;
 	console.log("newCampaignDetail: "+JSON.stringify(newCampaignDetail));
 	var validationErrors  = "";
