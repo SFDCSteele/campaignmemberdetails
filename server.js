@@ -31,7 +31,7 @@ function handleError(res, reason, message, code) {
 
 app.get('/', function(request, response) {
   response.render('pages/index');
-};
+});
 
 app.get('/campaignmemberdetails', function (request, response) {
   //pg.connect(process.env.DATABASE_URL, function(err, client, done) {
@@ -48,9 +48,7 @@ app.get('/campaignmemberdetails', function (request, response) {
        	response.render('pages/campaignmemberdetails', {results: result.rows} 
        ); }
     });
-  });
-})
-
+});
 
 app.post('/campaignmemberdetails', function (request, response) {
 	var newCampaignDetail = request.body;
