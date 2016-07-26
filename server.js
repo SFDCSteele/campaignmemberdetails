@@ -58,11 +58,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 	for (var prop in request) {
 	    if (request.hasOwnProperty(prop)) {
 	        console.log("1--"+prop +"-->"+request[prop]);
-			for (var prop2 in prop) {
-				if (prop.hasOwnProperty(prop2)) {
-					console.log("\t\t2--"+prop2 +"-->"+prop[prop2]);
-				}
-			}    
+			console.log("object: "+JSON.stringify(request[prop]));
 	    }
 	}    
 	console.log("REQUEST BODY: "+JSON.stringify(request.body));
