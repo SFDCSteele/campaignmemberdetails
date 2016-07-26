@@ -79,7 +79,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 	}
 	
 	bCampaignExists = campaignExists (newCampaignDetail);
-	if (bCampaignExists) {
+	if (bCampaignExists=="true") {
 		console.log("Campaign exists!: "+bCampaignExists);
 	} else {
 		console.log("xNon-existent campaign ID: "+bCampaignExists);
@@ -177,10 +177,10 @@ function campaignExists (body) {
       done();
       if (err) { 
       	console.error(err); 
-      	return false; 
+      	return "false"; 
       } else { 
        	console.log ("1-rows: "+JSON.stringify(result.rows)+" setting true");
-       	return true;
+       	return "true";
 	  }
     });
   });
