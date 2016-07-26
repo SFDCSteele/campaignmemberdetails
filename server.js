@@ -49,6 +49,7 @@ app.get('/campaignmemberdetails', function (request, response) {
        	response.render('pages/campaignmemberdetails', {results: result.rows} 
        ); }
     });
+  });
 });
 
 app.post('/campaignmemberdetails', function (request, response) {
