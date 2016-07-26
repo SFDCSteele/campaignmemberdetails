@@ -79,15 +79,19 @@ app.post('/campaignmemberdetails', function (request, response) {
 	}
 	
 	bCampaignExists = campaignExists (newCampaignDetail);
+	console.log("returning results of campaignExists: "_+ bCampaignExists);
 	if (bCampaignExists=="true") {
 		console.log("Campaign exists!: "+bCampaignExists);
 	} else {
 		console.log("xNon-existent campaign ID: "+bCampaignExists);
 		response.send("yNon-existent campaign ID");
 	}
-	if ( bCampaignExists ) {
-		response.send(200);
+	
+	if ( newCampaignDetail.Activity_Type__c = "Video" ) {
+		postVideoResults(newCampaignDetail);
 	}
+	
+	reponse.send(200);
 	/*var sqlInsert = "insert into campaign_details (";
 	var sqlFields = "";
 	var sqlValues = ") values (";
@@ -153,6 +157,10 @@ function buildQuery (opt) {
 	console.log("returning SQL: "+rtnSQL);
 	return rtnSQL;
 	
+}
+
+function postVideoResults(body) {
+	console.log("inside postVideoResults with activity: "+body.Name);
 }
 
 function performValidations(body) {
