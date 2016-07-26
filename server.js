@@ -57,7 +57,7 @@ app.get('/campaignmemberdetails', function (request, response) {
 });
 
 app.post('/campaignmemberdetails', function (request, response) {
-	var bCampaignExists = false;
+	var bCampaignExists = "false";
 	console.log("REQUEST     : "+request);
 	console.log("REQUEST BODY: "+request.body);
     console.log(JSON.stringify(request.body));
