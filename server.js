@@ -5,7 +5,7 @@ pg.defaults.ssl = true;
 var xClient = new pg.Client();
 
 var main_sql = "";
-xClient.connect(process.env.DATABASE_URL, function(err, client) {
+xClient.connect(process.env.DATABASE_URL, function(err, xClient) {
   if (err) throw err;
   console.log('Connected to postgres! Getting schemas...');
 
