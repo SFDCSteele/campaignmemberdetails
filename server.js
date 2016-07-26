@@ -21,7 +21,8 @@ app.set('port', (process.env.PORT || 5000));
 
 var app = express();
 app.use(express.static(__dirname + "/public"));
-app.use(bodyParser.json());
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(express.json());       // to support JSON-encoded bodies
 
 // views is directory for all template files
 app.set('views', __dirname + '/views');
