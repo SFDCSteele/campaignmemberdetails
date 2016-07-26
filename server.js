@@ -1,11 +1,11 @@
 var express = require('express');
 var app = express();
 var pg = require('pg');
+pg.defaults.ssl = true;
 var client = new pg.Client();
 
 var main_sql = "";
-pg.defaults.ssl = true;
-pg.connect(process.env.DATABASE_URL, function(err, client) {
+client.connect(process.env.DATABASE_URL, function(err, client) {
   if (err) throw err;
   console.log('Connected to postgres! Getting schemas...');
 
