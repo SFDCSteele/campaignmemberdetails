@@ -34,7 +34,7 @@ app.get('/campaignmemberdetails', function (request, response) {
        { console.error(err); response.send("Error " + err); }
       else
        { 
-       	console.log ("rows: "+result.rows);
+       	console.log ("1-rows: "+result.rows);
        	displayObject(result.rows);
        	response.render('pages/campaignmemberdetails', {results: result.rows} 
        ); }
@@ -87,7 +87,7 @@ function displayObject(rows) {
 	    	sqlFields += prop;
 	    	sqlValues += "'" + newCampaignDetail[prop] + "'";*/
 			console.log("How many columns: "+Object.keys(row).length);
-	        console.log(row +"-->"+rows[row]);
+	        console.log("2-"+row +"-->"+rows[row]);
 	        for (var col in row) {
 	        	if (row.hasOwnProperty(col)) {
 	        		console.log("\t"+col+"-->"+row[col]);
