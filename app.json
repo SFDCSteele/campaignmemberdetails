@@ -1,8 +1,8 @@
 {
-  "name": "Node.js Getting Started",
-  "description": "A barebones Node.js app using Express 4",
+  "name": "UWW DSOG Campaign Details REST API services",
+  "description": "This application processes REST API requests to validate and store campaign member activities.",
   "repository": "https://github.com/heroku/node-js-getting-started",
-  "logo": "http://node-js-sample.herokuapp.com/node.svg",
+  "logo": "http://campaignmemberdetails.herokuapp.com/uww.png",
   "keywords": ["node", "express", "static"],
   "image": "heroku/nodejs"
 }
