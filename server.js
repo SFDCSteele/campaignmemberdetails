@@ -90,7 +90,7 @@ function displayObject(rows) {
 	        console.log("2-"+row +"-->"+rows[row]);
 	        for (var col in row) {
 	        	if (row.hasOwnProperty(col)) {
-	        		console.log("\t"+col+"-->"+row[col]);
+	        		console.log("\t3-"+col+"-->"+row[col]);
 	        	}
 	        }
 	    }
