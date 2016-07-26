@@ -60,8 +60,9 @@ function handleError(res, reason, message, code) {
         <td><%= r.recordType %></td>
         <td><%= r.recordName %></td>
         <td><%= r.recordResults %></td>
-*/
 app.get('/campaigndetails', function (request, response) {
+*/
+app.get('/', function (request, response) {
 	console.log("Database: "+process.env.DATABASE_URL);
     pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     client.query('SELECT id,sfid,name FROM uwwsharedcrm.campaign_member_activity__c', 
