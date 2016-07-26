@@ -1,4 +1,3 @@
-var cool = require('cool-ascii-faces');
 var express = require('express');
 var app = express();
 var pg = require('pg');
@@ -16,13 +15,9 @@ app.get('/', function(request, response) {
   response.render('pages/index');
 });
 
-app.get('/cool', function(request, response) {
-  response.send(cool());
-});
-
 //SELECT * FROM test_table
 //select * from campaign_member_activity__c
-app.get('/db', function (request, response) {
+app.get('/campaigndetails', function (request, response) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     client.query('select * from uwwsharedcrm.campaign_member_activity__c', function(err, result) {
       done();
