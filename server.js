@@ -74,7 +74,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 	
 	validationErrors=performValidations(newCampaignDetail);
 	console.log("Validation errors: "+validationErrors);
-	if  (validationErrors == null || validationErrors.length<=0) {
+	if  (validationErrors == null || validationErrors.length<=1) {
 		console.log("Validation errors: "+validationErrors);
 		response.send("Validation errors: "+validationErrors);
 	}
@@ -103,6 +103,8 @@ app.post('/campaignmemberdetails', function (request, response) {
 				console.log ("1-rows: "+JSON.stringify(result.rows)+" setting true");
 			}
 		});
+		console.log("Which record to save: bCampaignExists: "+bCampaignExists+
+						" and Activity_Type__c: "+newCampaignDetail.Activity_Type__c);
 		if ( bCampaignExists && newCampaignDetail.Activity_Type__c == "Video" ) {
 			postVideoResults(newCampaignDetail);
 			response.send(200);
