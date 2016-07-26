@@ -108,7 +108,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 						" and Activity_Type__c: "+newCampaignDetail.Activity_Type__c);
 		//if ( bCampaignExists && newCampaignDetail.Activity_Type__c == "Video" ) {
 		if ( newCampaignDetail.Activity_Type__c == "Video" ) {			
-			client.query(postVideoResults(newCampaignDetail);, function(err, result) {
+			client.query(postVideoResults(newCampaignDetail), function(err, result) {
 				done();
 				if (err) { 
 					console.error(err); 
