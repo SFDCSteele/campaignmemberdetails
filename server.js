@@ -135,7 +135,7 @@ app.post('/campaignmemberdetails', function (request, response, next) {
 						checkForContactBySubscriberKey(newCampaignDetail, request, response, next);
 					} else {
 						console.log("Non-existent campaign ID: "+newCampaignDetail.Campaign__c);
-						response.send("Non-existent campaign ID: "+newCampaignDetail.Campaign__c);
+						response.send("Error:\tNon-existent campaign ID "+newCampaignDetail.Campaign__c);
 					}
 				}
 			});
