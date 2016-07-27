@@ -169,10 +169,10 @@ function checkForContactBySubscriberKey (newCampaignDetail, request, response) {
 						saveCampaignMemberActivity ( newCampaignDetail, request, response);
 					}
 				} else { 
-					console.log ("2-rows: "+JSON.stringify(result.rows)+
-								" rows: "+result.rows.length+
-								" sfid: "+result.rows[0].sfid);
 					if ( result.rows.length > 0 ) {
+						console.log ("2-rows: "+JSON.stringify(result.rows)+
+									" rows: "+result.rows.length+
+									" sfid: "+result.rows[0].sfid);
 						bSubscriberKeyFound = true;
 						console.log("Found contact for subscriber key: "+newCampaignDetail.SubscriberKey);
 						newCampaignDetail.contact__c=result.rows[0].sfid;
