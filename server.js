@@ -127,122 +127,96 @@ app.post('/campaignmemberdetails', function (request, response) {
 						console.log ("1-rows: "+JSON.stringify(result.rows)+
 										" rows: "+result.rows.length+
 										" sfid: "+result.rows[0].sfid);
-						//checkForContact(newCampaignDetail);
+						checkForContact(newCampaignDetail);
 					}
 				}
 			});
-			console.log("Which record to save: bCampaignExists: "+bCampaignExists+
-							" and Activity_Type__c: "+newCampaignDetail.Activity_Type__c);
-			console.log("##### 200 ### bCampaignExists: "+bCampaignExists+
-						" ### bSubscriberKeyFound: "+bSubscriberKeyFound+
-						" ### bEmailAddressFound: "+bEmailAddressFound);
-			//if ( bCampaignExists && newCampaignDetail.Activity_Type__c == "Video" ) {
 			
-			//This logic tries to determine if there is an existing contact for the subscriber key
-			//   if it was passed
-			if ( newCampaignDetail.SubscriberKey.length > 0 ) {
-				console.log("looking for contact based on subscriber key: query: "+buildQuery(3)+newCampaignDetail.SubscriberKey+"'");
-				client.query(buildQuery(3)+newCampaignDetail.SubscriberKey+"'", function(err, result) {
-					done();
-					if (err) { 
-						console.error(err); 
-						console.log("Cant find contact for subscriber key: "+newCampaignDetail.SubscriberKey);
-					} else { 
-						if ( result.rows.length > 0 ) {
-							bSubscriberKeyFound = true;
-							console.log("Found contact for subscriber key: "+newCampaignDetail.SubscriberKey);
-							console.log ("2-rows: "+JSON.stringify(result.rows)+
-										" rows: "+result.rows.length+
-										" sfid: "+result.rows[0].sfid);
-							newCampaignDetail.contact__c="\""+result.rows.sfid+"\"";
-							newCampaignDetail.test_prop1="testValue";
-							newCampaignDetail.test_prop2=999;
-						}
-					}
-				});
-			}
-			console.log("did we find the subscriber key contact: "+bSubscriberKeyFound+" added to object: "+
-					JSON.stringify(newCampaignDetail));
-			console.log("##### 300 ### bCampaignExists: "+bCampaignExists+
-						" ### bSubscriberKeyFound: "+bSubscriberKeyFound+
-						" ### bEmailAddressFound: "+bEmailAddressFound);
-			//This logic tries to determine if there is an existing contact for the email address
-			//   if subscriber key didn't find the record
-			if ( !bSubscriberKeyFound && newCampaignDetail.email.length > 0 ) {
-				console.log("looking for contact based on email: query: "+buildQuery(4)+newCampaignDetail.email+"'");
-				client.query(buildQuery(4)+newCampaignDetail.email+"'", function(err, result) {
-					done();
-					if (err) { 
-						console.error(err); 
-						console.log("Cant find contact for email address: "+newCampaignDetail.email);
-					} else { 
-						if ( result.rows.length > 0 ) {
-							bSubscriberKeyFound = true;
-							console.log("Found contact for email address: "+newCampaignDetail.email);
-							console.log ("3-rows: "+JSON.stringify(result.rows)+
-										" rows: "+result.rows.length+
-										" sfid: "+result.rows[0].sfid);
-							newCampaignDetail.contact__c=result.rows[0].sfid;
-						}
-					}
-				});
-			}
-			console.log("did we find the email contact: added to object: "+
-					JSON.stringify(newCampaignDetail));
-			console.log("##### 400 ### bCampaignExists: "+bCampaignExists+
-						" ### bSubscriberKeyFound: "+bSubscriberKeyFound+
-						" ### bEmailAddressFound: "+bEmailAddressFound);
-			
-			
-			//Now we can determine which record type (video, quiz, opportunity, future) was received
-			if ( newCampaignDetail.RecordType == "Video" ) {
-				newCampaignDetail.RecordTypeId="0122C0000004HnQQAU";			
-				client.query(postVideoResults(newCampaignDetail), function(err, result) {
-					done();
-					if (err) { 
-						console.error(err); 
-					} else { 
-						console.log("Campaign member activity posted: "+newCampaignDetail.Activity_Type__c);
-					}
-				});
-				response.send(200);
-			}
 		});
 	}
-	/*var sqlInsert = "insert into campaign_details (";
-	var sqlFields = "";
-	var sqlValues = ") values (";
-	var i = 0;
-	
-	for (var prop in newCampaignDetail) {
-	    if (newCampaignDetail.hasOwnProperty(prop)) {
-	    	if ( i++ > 0 ) {
-	    		sqlFields += ",";
-	    		sqlValues += ",";
-	    	}
-	    	sqlFields += prop;
-	    	sqlValues += "'" + newCampaignDetail[prop] + "'";
-	        console.log(prop +"-->"+newCampaignDetail[prop]);
-	    }
-	}    
-    //pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    pg.client.query(sqlInsert+sqlFields+sqlValues+")", function(err, result) {
-      done();
-      if (err)
-       { console.error(err); response.send("Error " + err+"<table><tr><td>datebase   url</td><td>"+process.env.DATABASE_URL+"</td></tr>"+
-                                                          "<tr><td>sql statement:</td><td>"+sqlInsert+sqlFields+sqlValues+")"+"</td></tr></table>"); }
-      else
-       { 
-	    response.send(200);
-     	//response.render('pages/db', {results: result.rows} );
-       }
-    //});
-  });*/
 })
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
+
+function checkForContact (newCampaignDetail) {
+	console.log("&&&&&&&&&&& inside: checkForContact");
+	console.log("Which record to save: bCampaignExists: "+bCampaignExists+
+					" and Activity_Type__c: "+newCampaignDetail.Activity_Type__c);
+	console.log("##### 200 ### bCampaignExists: "+bCampaignExists+
+				" ### bSubscriberKeyFound: "+bSubscriberKeyFound+
+				" ### bEmailAddressFound: "+bEmailAddressFound);
+	//if ( bCampaignExists && newCampaignDetail.Activity_Type__c == "Video" ) {
+	
+	//This logic tries to determine if there is an existing contact for the subscriber key
+	//   if it was passed
+	if ( newCampaignDetail.SubscriberKey.length > 0 ) {
+		console.log("looking for contact based on subscriber key: query: "+buildQuery(3)+newCampaignDetail.SubscriberKey+"'");
+		client.query(buildQuery(3)+newCampaignDetail.SubscriberKey+"'", function(err, result) {
+			done();
+			if (err) { 
+				console.error(err); 
+				console.log("Cant find contact for subscriber key: "+newCampaignDetail.SubscriberKey);
+			} else { 
+				if ( result.rows.length > 0 ) {
+					bSubscriberKeyFound = true;
+					console.log("Found contact for subscriber key: "+newCampaignDetail.SubscriberKey);
+					console.log ("2-rows: "+JSON.stringify(result.rows)+
+								" rows: "+result.rows.length+
+								" sfid: "+result.rows[0].sfid);
+					newCampaignDetail.contact__c="\""+result.rows.sfid+"\"";
+				}
+			}
+		});
+	}
+	console.log("did we find the subscriber key contact: "+bSubscriberKeyFound+" added to object: "+
+			JSON.stringify(newCampaignDetail));
+	console.log("##### 300 ### bCampaignExists: "+bCampaignExists+
+				" ### bSubscriberKeyFound: "+bSubscriberKeyFound+
+				" ### bEmailAddressFound: "+bEmailAddressFound);
+	//This logic tries to determine if there is an existing contact for the email address
+	//   if subscriber key didn't find the record
+	if ( !bSubscriberKeyFound && newCampaignDetail.email.length > 0 ) {
+		console.log("looking for contact based on email: query: "+buildQuery(4)+newCampaignDetail.email+"'");
+		client.query(buildQuery(4)+newCampaignDetail.email+"'", function(err, result) {
+			done();
+			if (err) { 
+				console.error(err); 
+				console.log("Cant find contact for email address: "+newCampaignDetail.email);
+			} else { 
+				if ( result.rows.length > 0 ) {
+					bSubscriberKeyFound = true;
+					console.log("Found contact for email address: "+newCampaignDetail.email);
+					console.log ("3-rows: "+JSON.stringify(result.rows)+
+								" rows: "+result.rows.length+
+								" sfid: "+result.rows[0].sfid);
+					newCampaignDetail.contact__c=result.rows[0].sfid;
+				}
+			}
+		});
+	}
+	console.log("did we find the email contact: added to object: "+
+			JSON.stringify(newCampaignDetail));
+	console.log("##### 400 ### bCampaignExists: "+bCampaignExists+
+				" ### bSubscriberKeyFound: "+bSubscriberKeyFound+
+				" ### bEmailAddressFound: "+bEmailAddressFound);
+	
+	
+	//Now we can determine which record type (video, quiz, opportunity, future) was received
+	if ( newCampaignDetail.RecordType == "Video" ) {
+		newCampaignDetail.RecordTypeId="0122C0000004HnQQAU";			
+		client.query(postVideoResults(newCampaignDetail), function(err, result) {
+			done();
+			if (err) { 
+				console.error(err); 
+			} else { 
+				console.log("Campaign member activity posted: "+newCampaignDetail.Activity_Type__c);
+			}
+		});
+		response.send(200);
+	}
+}
 
 function buildQuery (opt) {
 	var rtnSQL = "";
