@@ -112,7 +112,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 					bCampaignExists = true;
 					console.log("Campaign exists!: "+bCampaignExists);
 					console.log ("1-rows: "+JSON.stringify(result.rows)+
-									" rows: "+results.rows.length+
+									" rows: "+result.rows.length+
 									" sfid: "+result.rows[0].sfid);
 				}
 			});
@@ -136,7 +136,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 						bSubscriberKeyFound = true;
 						console.log("Found contact for subscriber key: "+newCampaignDetail.SubscriberKey);
 						console.log ("2-rows: "+JSON.stringify(result.rows)+
-									" rows: "+results.rows.length+
+									" rows: "+result.rows.length+
 									" sfid: "+result.rows[0].sfid);
 						newCampaignDetail.contact__c="\""+result.rows.sfid+"\"";
 						newCampaignDetail.test_prop1="testValue";
@@ -162,7 +162,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 						bSubscriberKeyFound = true;
 						console.log("Found contact for email address: "+newCampaignDetail.email);
 						console.log ("3-rows: "+JSON.stringify(result.rows)+
-									" rows: "+results.rows.length+
+									" rows: "+result.rows.length+
 									" sfid: "+result.rows[0].sfid);
 						newCampaignDetail.contact__c=result.rows[0].sfid;
 					}
