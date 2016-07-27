@@ -60,9 +60,9 @@ app.get('/campaignmemberdetails', function (request, response) {
        { console.error(err); response.send("Error " + err); }
       else
        { 
-       	console.log ("1-rows: "+result.rows);
-		console.log(JSON.stringify(result.rows));
-       	displayObject(result.rows);
+       	//console.log ("1-rows: "+result.rows);
+		//console.log(JSON.stringify(result.rows));
+       	//displayObject(result.rows);
        	response.render('pages/campaignmemberdetails', {results: result.rows} 
        ); }
     });
@@ -71,9 +71,9 @@ app.get('/campaignmemberdetails', function (request, response) {
 
 app.post('/campaignmemberdetails', function (request, response) {
 	var bContinueProcessing = true;
-	console.log("REQUEST     : "+request);
-	console.log("REQUEST BODY: "+request.body);
-    console.log(JSON.stringify(request.body));
+	//console.log("REQUEST     : "+request);
+	//console.log("REQUEST BODY: "+request.body);
+    //console.log(JSON.stringify(request.body));
 	/*for (var prop in request.body) {
 	    if (request.body.hasOwnProperty(prop)) {
 	        console.log("1--"+prop +"-->"+request.body[prop]);
@@ -277,7 +277,7 @@ function buildQuery (opt) {
 	} else if ( opt == 4 ) { //lookup campaign
 		rtnSQL = "select sfid from uwwsharedcrm.contact where email='";
 	}
-	console.log("returning SQL: "+rtnSQL);
+	//console.log("returning SQL: "+rtnSQL);
 	return rtnSQL;
 	
 }
