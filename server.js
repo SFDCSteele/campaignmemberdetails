@@ -167,12 +167,12 @@ function checkForContactBySubscriberKey (newCampaignDetail, request, response) {
 					saveCampaignMemberActivity ( newCampaignDetail, request, response);
 				}
 			} else { 
+				console.log ("2-rows: "+JSON.stringify(result.rows)+
+							" rows: "+result.rows.length+
+							" sfid: "+result.rows[0].sfid);
 				if ( result.rows.length > 0 ) {
 					bSubscriberKeyFound = true;
 					console.log("Found contact for subscriber key: "+newCampaignDetail.SubscriberKey);
-					console.log ("2-rows: "+JSON.stringify(result.rows)+
-								" rows: "+result.rows.length+
-								" sfid: "+result.rows[0].sfid);
 					newCampaignDetail.contact__c="\""+result.rows.sfid+"\"";
 				} else if ( newCampaignDetail.email.length > 0 ) {
 					checkForContactByEmail ( newCampaignDetail, request, response);
