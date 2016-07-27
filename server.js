@@ -7,7 +7,7 @@ var dateFormat = require('dateformat');
 var client = new pg.Client();
 
 var main_sql = "";
-var exclude_att = ["FirstName","LastName","email","PostalCode","SubscriberKey","LUWID"];
+var exclude_att = ["FirstName","LastName","email","PostalCode","SubscriberKey","LUWID","RecordType"];
 //client.connect(process.env.DATABASE_URL, function(err, xClient) {
 //client.connect(function(err) {
 /*client.connect(process.env.DATABASE_URL, function(err) {
@@ -103,12 +103,15 @@ app.post('/campaignmemberdetails', function (request, response) {
 	
 		//The logic below first checks to see if the campaign exists
 		var sSQL = buildQuery(2)+newCampaignDetail.Campaign__c+"'";
+		var bCampaignChecked = false;
 		var bCampaignExists = false;
+		var bSubscriberKeyChecked = false;
 		var bSubscriberKeyFound = false;
+		var bEmailAddressChecked = false;
 		var bEmailAddressFound = false;
-		console.log("##### 100 ### bCampaignExists: "+bCampaignExists+
-					" ### bSubscriberKeyFound: "+bSubscriberKeyFound+
-					" ### bEmailAddressFound: "+bEmailAddressFound);
+		console.log("##### 100 ### bCampaignChecked: "+bCampaignChecked+" ### bCampaignExists: "+bCampaignExists+
+					" ### bSubscriberKeyChecked: "+bSubscriberKeyChecked+" ### bSubscriberKeyFound: "+bSubscriberKeyFound+
+					" ### bEmailAddressChecked: "+bEmailAddressChecked+" ### bEmailAddressFound: "+bEmailAddressFound);
 		console.log("campaignExists: executing query: "+sSQL);
 		pg.connect(process.env.DATABASE_URL, function(err, client, done) {
 			client.query(sSQL, function(err, result) {
@@ -116,6 +119,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 				if (err) { 
 					console.error(err); 
 					console.log("Non-existent campaign ID: "+bCampaignExists);
+					response.send(err);
 				} else { 
 					if ( result.rows.length > 0 ) {
 						bCampaignExists = true;
@@ -123,6 +127,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 						console.log ("1-rows: "+JSON.stringify(result.rows)+
 										" rows: "+result.rows.length+
 										" sfid: "+result.rows[0].sfid);
+						//checkForContact(newCampaignDetail);
 					}
 				}
 			});
@@ -190,7 +195,8 @@ app.post('/campaignmemberdetails', function (request, response) {
 			
 			
 			//Now we can determine which record type (video, quiz, opportunity, future) was received
-			if ( newCampaignDetail.RecordTypeId == "0122C0000004HnQQAU" ) {			
+			if ( newCampaignDetail.RecordType == "Video" ) {
+				newCampaignDetail.RecordTypeId="\"0122C0000004HnQQAU\"";			
 				client.query(postVideoResults(newCampaignDetail), function(err, result) {
 					done();
 					if (err) { 
