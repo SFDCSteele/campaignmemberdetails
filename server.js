@@ -175,7 +175,7 @@ function checkForContactBySubscriberKey (newCampaignDetail, request, response) {
 					if ( result.rows.length > 0 ) {
 						bSubscriberKeyFound = true;
 						console.log("Found contact for subscriber key: "+newCampaignDetail.SubscriberKey);
-						newCampaignDetail.contact__c="\""+result.rows[0].sfid+"\"";
+						newCampaignDetail.contact__c=result.rows[0].sfid;
 						saveCampaignMemberActivity ( newCampaignDetail, request, response);
 					} else if ( newCampaignDetail.email.length > 0 ) {
 						checkForContactByEmail ( newCampaignDetail, request, response);
