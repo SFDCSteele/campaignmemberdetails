@@ -156,30 +156,33 @@ function checkForContactBySubscriberKey (newCampaignDetail, request, response) {
 	//   if it was passed
 	if ( newCampaignDetail.SubscriberKey.length > 0 ) {
 		console.log("looking for contact based on subscriber key: query: "+buildQuery(3)+newCampaignDetail.SubscriberKey+"'");
-		client.query(buildQuery(3)+newCampaignDetail.SubscriberKey+"'", function(err, result) {
-			done();
-			if (err) { 
-				console.error(err); 
-				console.log("Cant find contact for subscriber key: "+newCampaignDetail.SubscriberKey);
-				if ( newCampaignDetail.email.length > 0 ) {
-					checkForContactByEmail ( newCampaignDetail, request, response);
-				} else {
-					saveCampaignMemberActivity ( newCampaignDetail, request, response);
+		pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+			client.query(buildQuery(3)+newCampaignDetail.SubscriberKey+"'", function(err, result) {
+				console.log("after query for subscriberkey");
+				done();
+				if (err) { 
+					console.error(err); 
+					console.log("Cant find contact for subscriber key: "+newCampaignDetail.SubscriberKey);
+					if ( newCampaignDetail.email.length > 0 ) {
+						checkForContactByEmail ( newCampaignDetail, request, response);
+					} else {
+						saveCampaignMemberActivity ( newCampaignDetail, request, response);
+					}
+				} else { 
+					console.log ("2-rows: "+JSON.stringify(result.rows)+
+								" rows: "+result.rows.length+
+								" sfid: "+result.rows[0].sfid);
+					if ( result.rows.length > 0 ) {
+						bSubscriberKeyFound = true;
+						console.log("Found contact for subscriber key: "+newCampaignDetail.SubscriberKey);
+						newCampaignDetail.contact__c="\""+result.rows.sfid+"\"";
+					} else if ( newCampaignDetail.email.length > 0 ) {
+						checkForContactByEmail ( newCampaignDetail, request, response);
+					} else {
+						saveCampaignMemberActivity ( newCampaignDetail, request, response);
+					}
 				}
-			} else { 
-				console.log ("2-rows: "+JSON.stringify(result.rows)+
-							" rows: "+result.rows.length+
-							" sfid: "+result.rows[0].sfid);
-				if ( result.rows.length > 0 ) {
-					bSubscriberKeyFound = true;
-					console.log("Found contact for subscriber key: "+newCampaignDetail.SubscriberKey);
-					newCampaignDetail.contact__c="\""+result.rows.sfid+"\"";
-				} else if ( newCampaignDetail.email.length > 0 ) {
-					checkForContactByEmail ( newCampaignDetail, request, response);
-				} else {
-					saveCampaignMemberActivity ( newCampaignDetail, request, response);
-				}
-			}
+			});
 		});
 	} else if ( newCampaignDetail.email.length > 0 ) {
 		checkForContactByEmail ( newCampaignDetail, request, response);
@@ -201,23 +204,25 @@ function checkForContactByEmail(newCampaignDetail, request, response) {
 	//   if subscriber key didn't find the record
 	if ( newCampaignDetail.email.length > 0 ) {
 		console.log("looking for contact based on email: query: "+buildQuery(4)+newCampaignDetail.email+"'");
-		client.query(buildQuery(4)+newCampaignDetail.email+"'", function(err, result) {
-			done();
-			if (err) { 
-				console.error(err); 
-				console.log("Cant find contact for email address: "+newCampaignDetail.email);
-				saveCampaignMemberActivity(newCampaignDetail, request, response);
-			} else { 
-				if ( result.rows.length > 0 ) {
-					bSubscriberKeyFound = true;
-					console.log("Found contact for email address: "+newCampaignDetail.email);
-					console.log ("3-rows: "+JSON.stringify(result.rows)+
-								" rows: "+result.rows.length+
-								" sfid: "+result.rows[0].sfid);
-					newCampaignDetail.contact__c=result.rows[0].sfid;
+		pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+			client.query(buildQuery(4)+newCampaignDetail.email+"'", function(err, result) {
+				done();
+				if (err) { 
+					console.error(err); 
+					console.log("Cant find contact for email address: "+newCampaignDetail.email);
 					saveCampaignMemberActivity(newCampaignDetail, request, response);
+				} else { 
+					if ( result.rows.length > 0 ) {
+						bSubscriberKeyFound = true;
+						console.log("Found contact for email address: "+newCampaignDetail.email);
+						console.log ("3-rows: "+JSON.stringify(result.rows)+
+									" rows: "+result.rows.length+
+									" sfid: "+result.rows[0].sfid);
+						newCampaignDetail.contact__c=result.rows[0].sfid;
+						saveCampaignMemberActivity(newCampaignDetail, request, response);
+					}
 				}
-			}
+			});
 		});
 	}
 	console.log("did we find the email contact: added to object: "+
@@ -233,13 +238,15 @@ function saveCampaignMemberActivity ( newCampaignDetail, request, response) {
 	//Now we can determine which record type (video, quiz, opportunity, future) was received
 	if ( newCampaignDetail.RecordType == "Video" ) {
 		newCampaignDetail.RecordTypeId="0122C0000004HnQQAU";			
-		client.query(postVideoResults(newCampaignDetail), function(err, result) {
-			done();
-			if (err) { 
-				console.error(err); 
-			} else { 
-				console.log("Campaign member activity posted: "+newCampaignDetail.Activity_Type__c);
-			}
+		pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+			client.query(postVideoResults(newCampaignDetail), function(err, result) {
+				done();
+				if (err) { 
+					console.error(err); 
+				} else { 
+					console.log("Campaign member activity posted: "+newCampaignDetail.Activity_Type__c);
+				}
+			});
 		});
 		response.send(200);
 	}
