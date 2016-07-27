@@ -6,7 +6,8 @@ var bodyParser = require("body-parser");
 //var xClient = new pg.Client();
 
 var main_sql = "";
-var exclude_att = ["FirstName","LastName","email","PostalCode","SubscriberKey","LUWID"];
+var exclude_att = ["FirstName","LastName","email","PostalCode","SubscriberKey","LUWID",
+					"test_prop1","test_prop2"];
 /*xClient.connect(process.env.DATABASE_URL, function(err, xClient) {
   if (err) throw err;
   console.log('Connected to postgres! Getting schemas...');
@@ -70,7 +71,8 @@ app.post('/campaignmemberdetails', function (request, response) {
 	}    
 	console.log("REQUEST BODY: "+JSON.stringify(request.body));*/
 	var newCampaignDetail = request.body;
-	newCampaignDetail.test_prop="testValue";
+	newCampaignDetail.test_prop1="testValue";
+	newCampaignDetail.test_prop2=999;
 	console.log("newCampaignDetail: "+JSON.stringify(newCampaignDetail));
 	var validationErrors  = "";
 	
