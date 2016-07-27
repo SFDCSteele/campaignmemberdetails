@@ -214,7 +214,7 @@ function checkForContactByEmail(newCampaignDetail, request, response) {
 					saveCampaignMemberActivity(newCampaignDetail, request, response);
 				} else { 
 					if ( result.rows.length > 0 ) {
-						bSubscriberKeyFound = true;
+						bEmailAddressFound = true;
 						console.log("Found contact for email address: "+newCampaignDetail.email);
 						console.log ("3-rows: "+JSON.stringify(result.rows)+
 									" rows: "+result.rows.length+
@@ -246,11 +246,63 @@ function saveCampaignMemberActivity ( newCampaignDetail, request, response) {
 					console.error(err); 
 				} else { 
 					console.log("Campaign member activity posted: "+newCampaignDetail.Activity_Type__c);
+					if ( !bSubscriberKeyFound && !bEmailAddressFound ) {
+						//createLead ( newCampaignDetail, request, response);
+					}
 				}
 			});
 		});
 		response.send(200);
 	}
+}
+
+function createLead ( newCampaignDetail, request, response) {
+	console.log("&&&&&&&&&&& inside: createLead");
+	
+	//Now we can determine which record type (video, quiz, opportunity, future) was received
+	if ( newCampaignDetail.RecordType == "Video" ) {
+		newCampaignDetail.RecordTypeId="0122C0000004HnQQAU";			
+		pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+			client.query(buildLeadSQL(newCampaignDetail), function(err, result) {
+				done();
+				if (err) { 
+					console.error(err); 
+				} else { 
+					console.log("Lead Record save!");
+				}
+			});
+		});
+		response.send(200);
+	}
+}
+
+function buildLeadSQL (newCampaignDetail) {
+	var lead_include = ["FirstName","LastName","email","PostalCode",
+						"SubscriberKey","LUWID","Campaign__c","utm_source__c"];
+	var lead_attribs = ["firstname","lastname","email","acu_primary_mailing_zip__c",
+						"acu_subscriber_key__c","acu_luw_id__c","Campaign__c","dsog_utm_source__c"];
+	console.log("&&&&&&&&&&& inside: buildLeadSQL");
+	var sqlInsert = "insert into uwwsharedcrm.lead (";
+	var sqlFields = "";
+	var sqlValues = ") values (";
+	var i = 0;
+	
+	for (var prop in newCampaignDetail) {
+	    if (newCampaignDetail.hasOwnProperty(prop) &&
+	    	lead_include.indexOf(prop) >= 0) {
+	    	console.log("is "+prop+" in "+
+	    			lead_include+" ("+lead_include.indexOf(prop)+")");
+	    	if ( i++ > 0 ) {
+	    		sqlFields += ",";
+	    		sqlValues += ",";
+	    	}
+	    	sqlFields += lead_attribs[lead_include.indexOf(prop)];
+	    	sqlValues += "'" + newCampaignDetail[prop] + "'";
+	        console.log(lead_attribs[lead_include.indexOf(prop)] +"-->"+newCampaignDetail[prop]);
+	    }
+	}
+	console.log("buildLeadSQL: sql to execute: "+sqlInsert+sqlFields+sqlValues+")");
+	return sqlInsert+sqlFields+sqlValues+")";    
 }
 
 
@@ -332,16 +384,28 @@ function performValidations(body) {
 	var rtnErrors="";
 	console.log("performValidations: body: "+JSON.stringify(body));
 	console.log("performValidations: body.FirstName: "+body.FirstName.length);
-	if (!(body.FirstName || body.FirstName.length>0)) {
+	if (!(body.FirstName)) {
 		rtnErrors+= "Invalid user input\tMust provide a first name.";
 	}
-	if (!(body.LastName || body.LastName.length>0)) {
+	if ((body.FirstName && body.FirstName.length <=0)) {
+		rtnErrors+= "Invalid user input\tMust provide a first name.";
+	}
+	if (!(body.LastName)) {
 		rtnErrors+= "Invalid user input\tMust provide a last name.";
 	}
-	if (!(body.email || body.email.length>0)) {
+	if ((body.LastName && body.LastName.length <= 0)) {
+		rtnErrors+= "Invalid user input\tMust provide a last name.";
+	}
+	if (!(body.email)) {
 		rtnErrors+= "Invalid user input\tMust provide an email address.";
 	}
-	if (!(body.PostalCode || body.PostalCode.length>0)) {
+	if ((body.email && body.email.length <= 0)) {
+		rtnErrors+= "Invalid user input\tMust provide an email address.";
+	}
+	if (!(body.PostalCode)) {
+		rtnErrors+= "Invalid user input\tMust provide a postal code.";
+	}
+	if ((body.PostalCode && body.PostalCode.length <= 0)) {
 		rtnErrors+= "Invalid user input\tMust provide a postal code.";
 	}
 	return rtnErrors;
