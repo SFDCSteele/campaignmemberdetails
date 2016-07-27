@@ -76,6 +76,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 	validationErrors=performValidations(newCampaignDetail);
 	//console.log("1-Validation errors: "+validationErrors+" len: "+validationErrors.length);
 	if  (validationErrors.length>0) {
+		bContinueProcessing = false;
 		console.log("2-Validation errors: "+validationErrors+" len: "+validationErrors.length);
 		response.send("3-Validation errors: "+validationErrors+" len: "+validationErrors.length);
 	}
@@ -89,37 +90,38 @@ app.post('/campaignmemberdetails', function (request, response) {
 		response.send("yNon-existent campaign ID");
 	}*/
 	
-	var sSQL = buildQuery(2)+newCampaignDetail.Campaign__c+"'";
-	var bCampaignExists = false;
-	console.log("campaignExists: executing query: "+sSQL);
-	pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-		client.query(sSQL, function(err, result) {
-			done();
-			if (err) { 
-				console.error(err); 
-				console.log("Non-existent campaign ID: "+bCampaignExists);
-			} else { 
-				bCampaignExists = true;
-				console.log("Campaign exists!: "+bCampaignExists);
-				console.log ("1-rows: "+JSON.stringify(result.rows)+" setting true");
-			}
-		});
-		console.log("Which record to save: bCampaignExists: "+bCampaignExists+
-						" and Activity_Type__c: "+newCampaignDetail.Activity_Type__c);
-		//if ( bCampaignExists && newCampaignDetail.Activity_Type__c == "Video" ) {
-		if ( newCampaignDetail.RecordTypeId == "0122C0000004HnQQAU" ) {			
-			client.query(postVideoResults(newCampaignDetail), function(err, result) {
+	if ( bContinueProcessing ) {
+		var sSQL = buildQuery(2)+newCampaignDetail.Campaign__c+"'";
+		var bCampaignExists = false;
+		console.log("campaignExists: executing query: "+sSQL);
+		pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+			client.query(sSQL, function(err, result) {
 				done();
 				if (err) { 
 					console.error(err); 
+					console.log("Non-existent campaign ID: "+bCampaignExists);
 				} else { 
-					console.log("Campaign member activity posted: "+newCampaignDetail.Activity_Type__c);
+					bCampaignExists = true;
+					console.log("Campaign exists!: "+bCampaignExists);
+					console.log ("1-rows: "+JSON.stringify(result.rows)+" setting true");
 				}
 			});
-			response.send(200);
-		}
-	});
-	
+			console.log("Which record to save: bCampaignExists: "+bCampaignExists+
+							" and Activity_Type__c: "+newCampaignDetail.Activity_Type__c);
+			//if ( bCampaignExists && newCampaignDetail.Activity_Type__c == "Video" ) {
+			if ( newCampaignDetail.RecordTypeId == "0122C0000004HnQQAU" ) {			
+				client.query(postVideoResults(newCampaignDetail), function(err, result) {
+					done();
+					if (err) { 
+						console.error(err); 
+					} else { 
+						console.log("Campaign member activity posted: "+newCampaignDetail.Activity_Type__c);
+					}
+				});
+				response.send(200);
+			}
+		});
+	}
 	/*var sqlInsert = "insert into campaign_details (";
 	var sqlFields = "";
 	var sqlValues = ") values (";
