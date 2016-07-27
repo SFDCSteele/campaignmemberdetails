@@ -383,7 +383,7 @@ function postVideoResults(newCampaignDetail) {
 function performValidations(body) {
 	var rtnErrors="";
 	console.log("performValidations: body: "+JSON.stringify(body));
-	console.log("performValidations: body.FirstName: "+body.FirstName.length);
+	//console.log("performValidations: body.FirstName: "+body.FirstName.length);
 	if (!(body.FirstName)) {
 		rtnErrors+= "Invalid user input\tMust provide a first name.";
 	}
