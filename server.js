@@ -181,17 +181,22 @@ function checkForContactBySubscriberKey (newCampaignDetail, request, response) {
 				}
 			}
 		});
+	} else if ( newCampaignDetail.email.length > 0 ) {
+		checkForContactByEmail ( newCampaignDetail, request, response);
+	} else {
+		saveCampaignMemberActivity ( newCampaignDetail, request, response);
 	}
-	console.log("did we find the subscriber key contact: "+bSubscriberKeyFound+" added to object: "+
-			JSON.stringify(newCampaignDetail));
-	console.log("##### 300 ### bCampaignExists: "+bCampaignExists+
-				" ### bSubscriberKeyFound: "+bSubscriberKeyFound+
-				" ### bEmailAddressFound: "+bEmailAddressFound);
+
 	
 }
 
 function checkForContactByEmail(newCampaignDetail, request, response) {
 	console.log("&&&&&&&&&&& inside: checkForContactByEmail");
+	console.log("did we find the subscriber key contact: "+bSubscriberKeyFound+" added to object: "+
+			JSON.stringify(newCampaignDetail));
+	console.log("##### 300 ### bCampaignExists: "+bCampaignExists+
+				" ### bSubscriberKeyFound: "+bSubscriberKeyFound+
+				" ### bEmailAddressFound: "+bEmailAddressFound);
 	//This logic tries to determine if there is an existing contact for the email address
 	//   if subscriber key didn't find the record
 	if ( newCampaignDetail.email.length > 0 ) {
