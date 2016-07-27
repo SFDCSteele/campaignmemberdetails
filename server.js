@@ -215,17 +215,17 @@ function buildQuery (opt) {
 			"c.Name as \"CampaignName\","+
 			"a.Activity_Type__c as \"ActivityType\","+
 			"a.Activity_Result__c as \"ActivityResult\","+
-			"a.RecordTypeId as \"Record Type ID\","+
-			"a.Contact__c as \"Contact ID\","+
-			"a.Lead__c as \"Lead ID\","+
-			"a.Opportunity_Name__c as \"Opportunity Name\","+
-			"a.Opportunity_Type__c as \"Opportunity Type\","+
-			"a.Quiz_Name__c as \"Quiz Name\","+
-			"a.Quiz_Type__c as \"Quiz Type\","+
-			"a.Video_Name__c as \"Video Name\","+
-			"a.Video_Type__c as \"Video Type\","+
-			"a.Video_Status__c as \"Video Status\","+
-			"a.Future_1__c as \"Future Result\" "+
+			"a.RecordTypeId,"+
+			"a.Contact__c as \"ContactId\","+
+			"a.Lead__c as \"LeadId\","+
+			"a.Opportunity_Name__c as \"OpportunityName\","+
+			"a.Opportunity_Type__c as \"OpportunityType\","+
+			"a.Quiz_Name__c as \"QuizName\","+
+			"a.Quiz_Type__c as \"QuizType\","+
+			"a.Video_Name__c as \"VideoName\","+
+			"a.Video_Type__c as \"VideoType\","+
+			"a.Video_Status__c as \"VideoStatus\","+
+			"a.Future_1__c as \"FutureResult\" "+
 			"from uwwsharedcrm.campaign_member_activity__c a, uwwsharedcrm.campaign c "+
 			"where a.Campaign__c=c.sfid";
 	} else if ( opt == 2 ) { //lookup campaign

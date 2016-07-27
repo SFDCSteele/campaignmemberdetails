@@ -13,12 +13,23 @@
 
 <table border=1>
 	<tr><th>Id</th><th>SF Id</th><th>Activity Name</th><th>Campaign Id</th>
-		<th>Campaign Name</th><th>Activity Type</th><th>Activity Result</th></tr>
+		<th>Campaign Name</th><th>Activity Type</th><th>Activity Result</th>
+		<th>RecordTypeId</th><th>ContactId</th><th>LeadId</th>
+		<th>OpportunityName</th><th>OpportunityType</th><th>QuizName</th>
+		<th>QuizType</th><th>VideoName</th><th>VideoType</th>
+		<th>VideoStatus</th><th>FutureResult</th>
+	</tr>
     <% results.forEach(function(r) { %>
         <tr>
         	<td><%= r.id %></td><td><%= r.sfid %></td><td><%= r.name %></td>
         	<td><%= r.CampaignID %></td><td><%= r.CampaignName %></td>
         	<td><%= r.ActivityType %></td><td><%= r.ActivityResult %></td>
+        	<td><%= r.RecordTypeId %></td><td><%= r.ContactId %></td>
+        	<td><%= r.LeadId %></td><td><%= r.OpportunityName %></td>
+        	<td><%= r.OpportunityType %></td><td><%= r.QuizName %></td>
+        	<td><%= r.QuizType %></td><td><%= r.VideoName %></td>
+        	<td><%= r.VideoType %></td><td><%= r.VideoStatus %></td>
+        	<td><%= r.FutureResult %></td>
         </tr>
     <% }); %>
 </table>
