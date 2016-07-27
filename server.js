@@ -208,9 +208,9 @@ function buildQuery (opt) {
 	var rtnSQL = "";
 	if (opt == 1 ) {
 		rtnSQL = "select "+
-			"a.Id as ID,"+
-			"a.sfid as \"SF ID\","+
-			"a.Name as \"Activity Name\","+
+			"a.Id,"+
+			"a.sfid,"+
+			"a.Name,"+
 			"a.Campaign__c as \"Campaign ID\","+
 			"c.Name as \"Campaign Name\","+
 			"a.Activity_Type__c as \"Activity Type\","+
