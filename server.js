@@ -127,7 +127,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 						console.log ("1-rows: "+JSON.stringify(result.rows)+
 										" rows: "+result.rows.length+
 										" sfid: "+result.rows[0].sfid);
-						checkForContact(newCampaignDetail);
+						checkForContact(newCampaignDetail, request, response);
 					}
 				}
 			});
@@ -140,7 +140,7 @@ app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
-function checkForContact (newCampaignDetail) {
+function checkForContact (newCampaignDetail, request, response) {
 	console.log("&&&&&&&&&&& inside: checkForContact");
 	console.log("Which record to save: bCampaignExists: "+bCampaignExists+
 					" and Activity_Type__c: "+newCampaignDetail.Activity_Type__c);
