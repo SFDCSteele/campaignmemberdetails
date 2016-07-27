@@ -90,9 +90,14 @@ app.post('/campaignmemberdetails', function (request, response) {
 		response.send("yNon-existent campaign ID");
 	}*/
 	
+	// No errors from the validations, so we can continue
 	if ( bContinueProcessing ) {
+	
+		//The logic below first checks to see if the campaign exists
 		var sSQL = buildQuery(2)+newCampaignDetail.Campaign__c+"'";
 		var bCampaignExists = false;
+		var bSubscriberKeyFound = false;
+		var bEmailAddressFound = false;
 		console.log("campaignExists: executing query: "+sSQL);
 		pg.connect(process.env.DATABASE_URL, function(err, client, done) {
 			client.query(sSQL, function(err, result) {
@@ -109,6 +114,40 @@ app.post('/campaignmemberdetails', function (request, response) {
 			console.log("Which record to save: bCampaignExists: "+bCampaignExists+
 							" and Activity_Type__c: "+newCampaignDetail.Activity_Type__c);
 			//if ( bCampaignExists && newCampaignDetail.Activity_Type__c == "Video" ) {
+			
+			//This logic tries to determine if there is an existing contact for the subscriber key
+			//   if it was passed
+			if ( newCampaignDetail.SubscriberKey.length > 0 ) {
+				client.query(buildQuery(3)+newCampaignDetail.SubscriberKey+"'", function(err, result) {
+					done();
+					if (err) { 
+						console.error(err); 
+						console.log("Cant find contact for subscriber key: "+newCampaignDetail.SubscriberKey);
+					} else { 
+						bSubscriberKeyFound = true;
+						console.log("Found contact for subscriber key: "+newCampaignDetail.SubscriberKey);
+						console.log ("1-rows: "+JSON.stringify(result.rows)+" setting true");
+					}
+				});
+			}
+			//This logic tries to determine if there is an existing contact for the email address
+			//   if subscriber key didn't find the record
+			if ( !bSubscriberKeyFound && newCampaignDetail.email.length > 0 ) {
+				client.query(buildQuery(4)+newCampaignDetail.email+"'", function(err, result) {
+					done();
+					if (err) { 
+						console.error(err); 
+						console.log("Cant find contact for email address: "+newCampaignDetail.email);
+					} else { 
+						bSubscriberKeyFound = true;
+						console.log("Found contact for email address: "+newCampaignDetail.email);
+						console.log ("1-rows: "+JSON.stringify(result.rows)+" setting true");
+					}
+				});
+			}
+			
+			
+			//Now we can determine which record type (video, quiz, opportunity, future) was received
 			if ( newCampaignDetail.RecordTypeId == "0122C0000004HnQQAU" ) {			
 				client.query(postVideoResults(newCampaignDetail), function(err, result) {
 					done();
@@ -183,6 +222,10 @@ function buildQuery (opt) {
 			"where a.Campaign__c=c.sfid";
 	} else if ( opt == 2 ) { //lookup campaign
 		rtnSQL = "select sfid from uwwsharedcrm.campaign where sfid='";
+	} else if ( opt == 3 ) { //lookup campaign
+		rtnSQL = "select sfid from uwwsharedcrm.contact where acu_subscriber_key__c='";
+	} else if ( opt == 4 ) { //lookup campaign
+		rtnSQL = "select sfid from uwwsharedcrm.campaign where email='";
 	}
 	console.log("returning SQL: "+rtnSQL);
 	return rtnSQL;
