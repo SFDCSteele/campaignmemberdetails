@@ -118,6 +118,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 			//This logic tries to determine if there is an existing contact for the subscriber key
 			//   if it was passed
 			if ( newCampaignDetail.SubscriberKey.length > 0 ) {
+				console.log("looking for contact based on subscriber key: query: "+buildQuery(3)+newCampaignDetail.SubscriberKey+"'");
 				client.query(buildQuery(3)+newCampaignDetail.SubscriberKey+"'", function(err, result) {
 					done();
 					if (err) { 
@@ -133,6 +134,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 			//This logic tries to determine if there is an existing contact for the email address
 			//   if subscriber key didn't find the record
 			if ( !bSubscriberKeyFound && newCampaignDetail.email.length > 0 ) {
+				console.log("looking for contact based on email: query: "+buildQuery(4)+newCampaignDetail.email+"'");
 				client.query(buildQuery(4)+newCampaignDetail.email+"'", function(err, result) {
 					done();
 					if (err) { 
@@ -225,7 +227,7 @@ function buildQuery (opt) {
 	} else if ( opt == 3 ) { //lookup campaign
 		rtnSQL = "select sfid from uwwsharedcrm.contact where acu_subscriber_key__c='";
 	} else if ( opt == 4 ) { //lookup campaign
-		rtnSQL = "select sfid from uwwsharedcrm.campaign where email='";
+		rtnSQL = "select sfid from uwwsharedcrm.contact where email='";
 	}
 	console.log("returning SQL: "+rtnSQL);
 	return rtnSQL;
