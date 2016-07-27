@@ -111,7 +111,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 				} else { 
 					bCampaignExists = true;
 					console.log("Campaign exists!: "+bCampaignExists);
-					console.log ("1-rows: "+JSON.stringify(result.rows)+" sfid: "+result.rows.sfid);
+					console.log ("1-rows: "+JSON.stringify(result.rows)+" sfid: "+result.rows[0].sfid);
 				}
 			});
 			console.log("Which record to save: bCampaignExists: "+bCampaignExists+
@@ -133,7 +133,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 					} else { 
 						bSubscriberKeyFound = true;
 						console.log("Found contact for subscriber key: "+newCampaignDetail.SubscriberKey);
-						console.log ("2-rows: "+JSON.stringify(result.rows)+" sfid: "+result.rows.sfid);
+						console.log ("2-rows: "+JSON.stringify(result.rows)+" sfid: "+result.rows[0].sfid);
 						newCampaignDetail.contact__c="\""+result.rows.sfid+"\"";
 						newCampaignDetail.test_prop1="testValue";
 						newCampaignDetail.test_prop2=999;
@@ -158,7 +158,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 						bSubscriberKeyFound = true;
 						console.log("Found contact for email address: "+newCampaignDetail.email);
 						console.log ("3-rows: "+JSON.stringify(result.rows)+" sfid: "+result.rows.sfid);
-						newCampaignDetail.contact__c=result.rows.sfid;
+						newCampaignDetail.contact__c=result.rows[0].sfid;
 					}
 				});
 			}
