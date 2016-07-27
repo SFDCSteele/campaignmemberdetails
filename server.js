@@ -3,6 +3,7 @@ var pg = require('pg');
 var path = require("path");
 pg.defaults.ssl = true;
 var bodyParser = require("body-parser");
+var dateFormat = require('dateformat');
 var client = new pg.Client();
 
 var main_sql = "";
@@ -75,8 +76,8 @@ app.post('/campaignmemberdetails', function (request, response) {
 	}    
 	console.log("REQUEST BODY: "+JSON.stringify(request.body));*/
 	var newCampaignDetail = request.body;
-	newCampaignDetail.activity_date__c = new Date();
-	newCampaignDetail.activity_date_and_time__c = new Date();
+	newCampaignDetail.activity_date__c = dateFormat(new Date(), "yyyy-mm-dd");
+	newCampaignDetail.activity_date_and_time__c = dateFormat(new Date(), "yyyy-mm-dd h:MM:ss");
 	console.log("newCampaignDetail: "+JSON.stringify(newCampaignDetail));
 	var validationErrors  = "";
 	
