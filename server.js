@@ -6,8 +6,7 @@ var bodyParser = require("body-parser");
 //var xClient = new pg.Client();
 
 var main_sql = "";
-var exclude_att = ["FirstName","LastName","email","PostalCode","SubscriberKey","LUWID",
-					"test_prop1","test_prop2"];
+var exclude_att = ["FirstName","LastName","email","PostalCode","SubscriberKey","LUWID"];
 /*xClient.connect(process.env.DATABASE_URL, function(err, xClient) {
   if (err) throw err;
   console.log('Connected to postgres! Getting schemas...');
@@ -71,8 +70,6 @@ app.post('/campaignmemberdetails', function (request, response) {
 	}    
 	console.log("REQUEST BODY: "+JSON.stringify(request.body));*/
 	var newCampaignDetail = request.body;
-	newCampaignDetail.test_prop1="testValue";
-	newCampaignDetail.test_prop2=999;
 	console.log("newCampaignDetail: "+JSON.stringify(newCampaignDetail));
 	var validationErrors  = "";
 	
@@ -114,7 +111,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 				} else { 
 					bCampaignExists = true;
 					console.log("Campaign exists!: "+bCampaignExists);
-					console.log ("1-rows: "+JSON.stringify(result.rows)+" setting true");
+					console.log ("1-rows: "+JSON.stringify(result.rows)+" sfid: "+result.rows.sfid);
 				}
 			});
 			console.log("Which record to save: bCampaignExists: "+bCampaignExists+
@@ -136,8 +133,10 @@ app.post('/campaignmemberdetails', function (request, response) {
 					} else { 
 						bSubscriberKeyFound = true;
 						console.log("Found contact for subscriber key: "+newCampaignDetail.SubscriberKey);
-						console.log ("1-rows: "+JSON.stringify(result.rows)+" setting true");
-						newCampaignDetail.contact__c=result.rows.sfid;
+						console.log ("2-rows: "+JSON.stringify(result.rows)+" sfid: "+result.rows.sfid);
+						newCampaignDetail.contact__c="\""+result.rows.sfid+"\"";
+						newCampaignDetail.test_prop1="testValue";
+						newCampaignDetail.test_prop2=999;
 					}
 				});
 			}
@@ -158,7 +157,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 					} else { 
 						bSubscriberKeyFound = true;
 						console.log("Found contact for email address: "+newCampaignDetail.email);
-						console.log ("1-rows: "+JSON.stringify(result.rows)+" setting true");
+						console.log ("3-rows: "+JSON.stringify(result.rows)+" sfid: "+result.rows.sfid);
 						newCampaignDetail.contact__c=result.rows.sfid;
 					}
 				});
