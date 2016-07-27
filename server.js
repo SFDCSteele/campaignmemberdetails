@@ -8,6 +8,12 @@ var client = new pg.Client();
 
 var main_sql = "";
 var exclude_att = ["FirstName","LastName","email","PostalCode","SubscriberKey","LUWID","RecordType"];
+var bCampaignChecked = false;
+var bCampaignExists = false;
+var bSubscriberKeyChecked = false;
+var bSubscriberKeyFound = false;
+var bEmailAddressChecked = false;
+var bEmailAddressFound = false;
 //client.connect(process.env.DATABASE_URL, function(err, xClient) {
 //client.connect(function(err) {
 /*client.connect(process.env.DATABASE_URL, function(err) {
@@ -103,12 +109,6 @@ app.post('/campaignmemberdetails', function (request, response) {
 	
 		//The logic below first checks to see if the campaign exists
 		var sSQL = buildQuery(2)+newCampaignDetail.Campaign__c+"'";
-		var bCampaignChecked = false;
-		var bCampaignExists = false;
-		var bSubscriberKeyChecked = false;
-		var bSubscriberKeyFound = false;
-		var bEmailAddressChecked = false;
-		var bEmailAddressFound = false;
 		console.log("##### 100 ### bCampaignChecked: "+bCampaignChecked+" ### bCampaignExists: "+bCampaignExists+
 					" ### bSubscriberKeyChecked: "+bSubscriberKeyChecked+" ### bSubscriberKeyFound: "+bSubscriberKeyFound+
 					" ### bEmailAddressChecked: "+bEmailAddressChecked+" ### bEmailAddressFound: "+bEmailAddressFound);
