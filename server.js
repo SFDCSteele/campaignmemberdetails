@@ -75,8 +75,8 @@ app.post('/campaignmemberdetails', function (request, response) {
 	}    
 	console.log("REQUEST BODY: "+JSON.stringify(request.body));*/
 	var newCampaignDetail = request.body;
-	newContact.activity_date__c = new Date();
-	newContact.activity_date_and_time__c = new Date();
+	newCampaignDetail.activity_date__c = new Date();
+	newCampaignDetail.activity_date_and_time__c = new Date();
 	console.log("newCampaignDetail: "+JSON.stringify(newCampaignDetail));
 	var validationErrors  = "";
 	
