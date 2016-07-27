@@ -44,6 +44,7 @@ app.use(function(req, res, next) {
   next();
 });
 
+
 app.set('port', (process.env.PORT || 5000));
 
 // Generic error handler used by all endpoints.
@@ -75,6 +76,8 @@ app.get('/campaignmemberdetails', function (request, response, next) {
 });
 
 app.post('/campaignmemberdetails', function (request, response, next) {
+	response.header("Access-Control-Allow-Origin", "*")
+	response.json(posts);
 	var bContinueProcessing = true;
 	//console.log("REQUEST     : "+request);
 	//console.log("REQUEST BODY: "+request.body);
