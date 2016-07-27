@@ -8,7 +8,8 @@ var client = new pg.Client();
 var main_sql = "";
 var exclude_att = ["FirstName","LastName","email","PostalCode","SubscriberKey","LUWID"];
 //client.connect(process.env.DATABASE_URL, function(err, xClient) {
-client.connect(function(err) {
+//client.connect(function(err) {
+client.connect(process.env.DATABASE_URL, function(err) {
   if (err) {
     console.log(err);
     process.exit(1);
