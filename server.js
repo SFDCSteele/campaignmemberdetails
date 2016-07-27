@@ -76,8 +76,11 @@ app.get('/campaignmemberdetails', function (request, response, next) {
 });
 
 app.post('/campaignmemberdetails', function (request, response, next) {
-	response.header("Access-Control-Allow-Origin", "*")
-	response.json(posts);
+  response.header("Access-Control-Allow-Origin", "*");
+  response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+	//response.header("Access-Control-Allow-Origin", "*")
+	//response.json(posts);
 	var bContinueProcessing = true;
 	//console.log("REQUEST     : "+request);
 	//console.log("REQUEST BODY: "+request.body);
