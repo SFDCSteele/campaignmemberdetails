@@ -196,7 +196,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 			
 			//Now we can determine which record type (video, quiz, opportunity, future) was received
 			if ( newCampaignDetail.RecordType == "Video" ) {
-				newCampaignDetail.RecordTypeId="\"0122C0000004HnQQAU\"";			
+				newCampaignDetail.RecordTypeId="0122C0000004HnQQAU";			
 				client.query(postVideoResults(newCampaignDetail), function(err, result) {
 					done();
 					if (err) { 
