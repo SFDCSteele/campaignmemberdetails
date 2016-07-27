@@ -128,9 +128,12 @@ app.post('/campaignmemberdetails', function (request, response) {
 						bSubscriberKeyFound = true;
 						console.log("Found contact for subscriber key: "+newCampaignDetail.SubscriberKey);
 						console.log ("1-rows: "+JSON.stringify(result.rows)+" setting true");
+						newCampaignDetail.contact__c=result.rows.sfid;
 					}
 				});
 			}
+			console.log("did we find the subscriber key contact: "+bSubscriberKeyFound+" added to object: "+
+					JSON.stringify(newCampaignDetail));
 			//This logic tries to determine if there is an existing contact for the email address
 			//   if subscriber key didn't find the record
 			if ( !bSubscriberKeyFound && newCampaignDetail.email.length > 0 ) {
@@ -144,9 +147,12 @@ app.post('/campaignmemberdetails', function (request, response) {
 						bSubscriberKeyFound = true;
 						console.log("Found contact for email address: "+newCampaignDetail.email);
 						console.log ("1-rows: "+JSON.stringify(result.rows)+" setting true");
+						newCampaignDetail.contact__c=result.rows.sfid;
 					}
 				});
 			}
+			console.log("did we find the email contact: added to object: "+
+					JSON.stringify(newCampaignDetail));
 			
 			
 			//Now we can determine which record type (video, quiz, opportunity, future) was received
