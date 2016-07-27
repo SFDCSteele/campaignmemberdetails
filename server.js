@@ -92,7 +92,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 	if  (validationErrors.length>0) {
 		bContinueProcessing = false;
 		console.log("2-Validation errors: "+validationErrors+" len: "+validationErrors.length);
-		response.send("3-Validation errors: "+validationErrors+" len: "+validationErrors.length);
+		response.send("Validation errors: "+validationErrors);
 	}
 	
 	/*bCampaignExists = campaignExists (newCampaignDetail);
