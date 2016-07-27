@@ -1,0 +1,1 @@
+# campaignmemberdetails
