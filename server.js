@@ -3,11 +3,12 @@ var pg = require('pg');
 var path = require("path");
 pg.defaults.ssl = true;
 var bodyParser = require("body-parser");
-//var xClient = new pg.Client();
+var client = new pg.Client();
 
 var main_sql = "";
 var exclude_att = ["FirstName","LastName","email","PostalCode","SubscriberKey","LUWID"];
-/*xClient.connect(process.env.DATABASE_URL, function(err, xClient) {
+//client.connect(process.env.DATABASE_URL, function(err, xClient) {
+client.connect(function(err) {
   if (err) throw err;
   console.log('Connected to postgres! Getting schemas...');
 
@@ -16,7 +17,7 @@ var exclude_att = ["FirstName","LastName","email","PostalCode","SubscriberKey","
     .on('row', function(row) {
       console.log(JSON.stringify(row));
     });
-});*/
+});
 
 var app = express();
 app.use(express.static(__dirname + "/public"));
@@ -40,7 +41,7 @@ app.get('/', function(request, response) {
 });
 
 app.get('/campaignmemberdetails', function (request, response) {
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+  //pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     //client.query('select * from uwwsharedcrm.campaign_member_activity__c', function(err, result) {
     client.query(buildQuery(1), function(err, result) {
       done();
@@ -54,7 +55,7 @@ app.get('/campaignmemberdetails', function (request, response) {
        	response.render('pages/campaignmemberdetails', {results: result.rows} 
        ); }
     });
-  });
+  //});
 });
 
 app.post('/campaignmemberdetails', function (request, response) {
@@ -70,6 +71,8 @@ app.post('/campaignmemberdetails', function (request, response) {
 	}    
 	console.log("REQUEST BODY: "+JSON.stringify(request.body));*/
 	var newCampaignDetail = request.body;
+	newContact.activity_date__c = new Date();
+	newContact.activity_date_and_time__c = new Date();
 	console.log("newCampaignDetail: "+JSON.stringify(newCampaignDetail));
 	var validationErrors  = "";
 	
