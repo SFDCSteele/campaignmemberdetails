@@ -109,11 +109,13 @@ app.post('/campaignmemberdetails', function (request, response) {
 					console.error(err); 
 					console.log("Non-existent campaign ID: "+bCampaignExists);
 				} else { 
-					bCampaignExists = true;
-					console.log("Campaign exists!: "+bCampaignExists);
-					console.log ("1-rows: "+JSON.stringify(result.rows)+
-									" rows: "+result.rows.length+
-									" sfid: "+result.rows[0].sfid);
+					if ( result.rows.length > 0 ) {
+						bCampaignExists = true;
+						console.log("Campaign exists!: "+bCampaignExists);
+						console.log ("1-rows: "+JSON.stringify(result.rows)+
+										" rows: "+result.rows.length+
+										" sfid: "+result.rows[0].sfid);
+					}
 				}
 			});
 			console.log("Which record to save: bCampaignExists: "+bCampaignExists+
@@ -133,14 +135,16 @@ app.post('/campaignmemberdetails', function (request, response) {
 						console.error(err); 
 						console.log("Cant find contact for subscriber key: "+newCampaignDetail.SubscriberKey);
 					} else { 
-						bSubscriberKeyFound = true;
-						console.log("Found contact for subscriber key: "+newCampaignDetail.SubscriberKey);
-						console.log ("2-rows: "+JSON.stringify(result.rows)+
-									" rows: "+result.rows.length+
-									" sfid: "+result.rows[0].sfid);
-						newCampaignDetail.contact__c="\""+result.rows.sfid+"\"";
-						newCampaignDetail.test_prop1="testValue";
-						newCampaignDetail.test_prop2=999;
+						if ( result.rows.length > 0 ) {
+							bSubscriberKeyFound = true;
+							console.log("Found contact for subscriber key: "+newCampaignDetail.SubscriberKey);
+							console.log ("2-rows: "+JSON.stringify(result.rows)+
+										" rows: "+result.rows.length+
+										" sfid: "+result.rows[0].sfid);
+							newCampaignDetail.contact__c="\""+result.rows.sfid+"\"";
+							newCampaignDetail.test_prop1="testValue";
+							newCampaignDetail.test_prop2=999;
+						}
 					}
 				});
 			}
@@ -159,12 +163,14 @@ app.post('/campaignmemberdetails', function (request, response) {
 						console.error(err); 
 						console.log("Cant find contact for email address: "+newCampaignDetail.email);
 					} else { 
-						bSubscriberKeyFound = true;
-						console.log("Found contact for email address: "+newCampaignDetail.email);
-						console.log ("3-rows: "+JSON.stringify(result.rows)+
-									" rows: "+result.rows.length+
-									" sfid: "+result.rows[0].sfid);
-						newCampaignDetail.contact__c=result.rows[0].sfid;
+						if ( result.rows.length > 0 ) {
+							bSubscriberKeyFound = true;
+							console.log("Found contact for email address: "+newCampaignDetail.email);
+							console.log ("3-rows: "+JSON.stringify(result.rows)+
+										" rows: "+result.rows.length+
+										" sfid: "+result.rows[0].sfid);
+							newCampaignDetail.contact__c=result.rows[0].sfid;
+						}
 					}
 				});
 			}
