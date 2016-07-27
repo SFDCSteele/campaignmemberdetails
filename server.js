@@ -211,10 +211,10 @@ function buildQuery (opt) {
 			"a.Id,"+
 			"a.sfid,"+
 			"a.Name,"+
-			"a.Campaign__c as \"Campaign ID\","+
-			"c.Name as \"Campaign Name\","+
-			"a.Activity_Type__c as \"Activity Type\","+
-			"a.Activity_Result__c as \"Activity Result\","+
+			"a.Campaign__c as \"CampaignID\","+
+			"c.Name as \"CampaignName\","+
+			"a.Activity_Type__c as \"ActivityType\","+
+			"a.Activity_Result__c as \"ActivityResult\","+
 			"a.RecordTypeId as \"Record Type ID\","+
 			"a.Contact__c as \"Contact ID\","+
 			"a.Lead__c as \"Lead ID\","+

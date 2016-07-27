@@ -12,9 +12,14 @@
 <h2>Campaign Member Details Results</h2>
 
 <table border=1>
-	<tr><th>ID</th><th>Name</th></tr>
+	<tr><th>Id</th><th>SF Id</th><th>Activity Name</th><th>Campaign Id</th>
+		<th>Campaign Name</th><th>Activity Type</th><th>Activity Result</th></tr>
     <% results.forEach(function(r) { %>
-        <tr><td><%= r.id %></td><td><%= r.sfid %></td><td><%= r.name %></td></tr>
+        <tr>
+        	<td><%= r.id %></td><td><%= r.sfid %></td><td><%= r.name %></td>
+        	<td><%= r.CampaignID %></td><td><%= r.CampaignName %></td>
+        	<td><%= r.ActivityType %></td><td><%= r.ActivityResult %></td>
+        </tr>
     <% }); %>
 </table>
 
