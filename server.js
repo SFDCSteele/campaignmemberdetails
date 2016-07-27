@@ -390,28 +390,28 @@ function performValidations(body) {
 	console.log("performValidations: body: "+JSON.stringify(body));
 	//console.log("performValidations: body.FirstName: "+body.FirstName.length);
 	if (!(body.FirstName)) {
-		rtnErrors+= "Invalid user input\tMust provide a first name.";
+		rtnErrors+= "Error:\tMust provide a first name.\n";
 	}
 	if ((body.FirstName && body.FirstName.length <=0)) {
-		rtnErrors+= "Invalid user input\tMust provide a first name.";
+		rtnErrors+= "Error:\tMust provide a first name.\n";
 	}
 	if (!(body.LastName)) {
-		rtnErrors+= "Invalid user input\tMust provide a last name.";
+		rtnErrors+= "Error:\tMust provide a last name.\n";
 	}
 	if ((body.LastName && body.LastName.length <= 0)) {
-		rtnErrors+= "Invalid user input\tMust provide a last name.";
+		rtnErrors+= "Error:\tMust provide a last name.\n";
 	}
 	if (!(body.email)) {
-		rtnErrors+= "Invalid user input\tMust provide an email address.";
+		rtnErrors+= "Error:\tMust provide an email address.\n";
 	}
 	if ((body.email && body.email.length <= 0)) {
-		rtnErrors+= "Invalid user input\tMust provide an email address.";
+		rtnErrors+= "Error:\tMust provide an email address.\n";
 	}
 	if (!(body.PostalCode)) {
-		rtnErrors+= "Invalid user input\tMust provide a postal code.";
+		rtnErrors+= "Error:\tMust provide a postal code.\n";
 	}
 	if ((body.PostalCode && body.PostalCode.length <= 0)) {
-		rtnErrors+= "Invalid user input\tMust provide a postal code.";
+		rtnErrors+= "Error:\tMust provide a postal code.\n";
 	}
 	return rtnErrors;
 }
