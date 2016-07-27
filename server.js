@@ -9,7 +9,10 @@ var main_sql = "";
 var exclude_att = ["FirstName","LastName","email","PostalCode","SubscriberKey","LUWID"];
 //client.connect(process.env.DATABASE_URL, function(err, xClient) {
 client.connect(function(err) {
-  if (err) throw err;
+  if (err) {
+    console.log(err);
+    process.exit(1);
+  }
   console.log('Connected to postgres! Getting schemas...');
 
   client
