@@ -70,6 +70,7 @@ app.post('/campaignmemberdetails', function (request, response) {
 	}    
 	console.log("REQUEST BODY: "+JSON.stringify(request.body));*/
 	var newCampaignDetail = request.body;
+	newCampaignDetail.test_prop="testValue";
 	console.log("newCampaignDetail: "+JSON.stringify(newCampaignDetail));
 	var validationErrors  = "";
 	
@@ -98,6 +99,9 @@ app.post('/campaignmemberdetails', function (request, response) {
 		var bCampaignExists = false;
 		var bSubscriberKeyFound = false;
 		var bEmailAddressFound = false;
+		console.log("##### 100 ### bCampaignExists: "+bCampaignExists+
+					" ### bSubscriberKeyFound: "+bSubscriberKeyFound+
+					" ### bEmailAddressFound: "+bEmailAddressFound);
 		console.log("campaignExists: executing query: "+sSQL);
 		pg.connect(process.env.DATABASE_URL, function(err, client, done) {
 			client.query(sSQL, function(err, result) {
@@ -113,6 +117,9 @@ app.post('/campaignmemberdetails', function (request, response) {
 			});
 			console.log("Which record to save: bCampaignExists: "+bCampaignExists+
 							" and Activity_Type__c: "+newCampaignDetail.Activity_Type__c);
+			console.log("##### 200 ### bCampaignExists: "+bCampaignExists+
+						" ### bSubscriberKeyFound: "+bSubscriberKeyFound+
+						" ### bEmailAddressFound: "+bEmailAddressFound);
 			//if ( bCampaignExists && newCampaignDetail.Activity_Type__c == "Video" ) {
 			
 			//This logic tries to determine if there is an existing contact for the subscriber key
@@ -134,6 +141,9 @@ app.post('/campaignmemberdetails', function (request, response) {
 			}
 			console.log("did we find the subscriber key contact: "+bSubscriberKeyFound+" added to object: "+
 					JSON.stringify(newCampaignDetail));
+			console.log("##### 300 ### bCampaignExists: "+bCampaignExists+
+						" ### bSubscriberKeyFound: "+bSubscriberKeyFound+
+						" ### bEmailAddressFound: "+bEmailAddressFound);
 			//This logic tries to determine if there is an existing contact for the email address
 			//   if subscriber key didn't find the record
 			if ( !bSubscriberKeyFound && newCampaignDetail.email.length > 0 ) {
@@ -153,6 +163,9 @@ app.post('/campaignmemberdetails', function (request, response) {
 			}
 			console.log("did we find the email contact: added to object: "+
 					JSON.stringify(newCampaignDetail));
+			console.log("##### 400 ### bCampaignExists: "+bCampaignExists+
+						" ### bSubscriberKeyFound: "+bSubscriberKeyFound+
+						" ### bEmailAddressFound: "+bEmailAddressFound);
 			
 			
 			//Now we can determine which record type (video, quiz, opportunity, future) was received
