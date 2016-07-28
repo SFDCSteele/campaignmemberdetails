@@ -1,4 +1,5 @@
 var express = require('express');
+var cors = require('cors');
 var pg = require('pg');
 var path = require("path");
 pg.defaults.ssl = true;
@@ -42,6 +43,10 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
+});
+app.use(cors());
+app.options('*',cors(),function(){
+console.log("preflight")
 });
 
 
